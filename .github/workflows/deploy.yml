@@ -1,4 +1,4 @@
-name: Deploy to Bluehost
+name: Build & deploy
 
 on:
   push:
@@ -24,6 +24,18 @@ jobs:
       - name: Build site (Eleventy)
         run: npm run build
 
+      # Point the CMS at THIS repo automatically — no code edits needed.
+      - name: Write CMS repo config
+        run: |
+          mkdir -p _site/admin
+          cat > _site/admin/repo.json <<JSON
+          {
+            "owner": "${GITHUB_REPOSITORY%%/*}",
+            "repo": "${GITHUB_REPOSITORY##*/}",
+            "branch": "${GITHUB_REF_NAME}"
+          }
+          JSON
+
       - name: Write OAuth proxy config (from repo secrets)
         env:
           CID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
@@ -39,18 +51,18 @@ jobs:
           ];
           PHP
 
-      - name: Deploy to Bluehost via FTP
+      # FTP target comes from repo Variables (Settings → Secrets and variables →
+      # Actions → Variables): FTP_SERVER, FTP_USERNAME. Password is a Secret.
+      - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: gad.vxv.mybluehost.me
-          username: deploy@gad.vxv.mybluehost.me
+          server: ${{ vars.FTP_SERVER }}
+          username: ${{ vars.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Only the built site is uploaded now (not the raw source/templates).
           local-dir: ./_site/
           server-dir: /
-          # clean-slate is OFF so server-managed files that aren't in the build
-          # (smtp-config.php, phpmailer/, etc.) are preserved across deploys.
-          # Built files share the same names, so they overwrite cleanly.
+          # clean-slate OFF so server-only files (smtp-config.php, phpmailer/,
+          # oauth/oauth-config.php) are preserved across deploys.
           dangerous-clean-slate: false
           exclude: |
             **/.git*

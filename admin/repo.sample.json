@@ -1,0 +1,6 @@
+{
+  "_comment": "Which GitHub repo the CMS reads from and commits to. On deploy, CI overwrites admin/repo.json automatically from the repository you deployed. For LOCAL development only, copy this file to admin/repo.json and fill in your values.",
+  "owner": "your-github-username",
+  "repo": "your-repo-name",
+  "branch": "main"
+}

@@ -6,6 +6,7 @@ import {
   useEffect,
   useCallback,
 } from "@/lib.js";
+import { loadRepoConfig } from "@/config.js";
 import { makeClient } from "@/github/client.js";
 import { makeContents } from "@/github/contents.js";
 import { makeGitData } from "@/github/gitdata.js";
@@ -72,6 +73,7 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
+        await loadRepoConfig(); // resolve owner/repo/branch before any API call
         const [projects, home, about, contact] = await Promise.all([
           projectsApi.list(),
           pagesApi.load("home"),

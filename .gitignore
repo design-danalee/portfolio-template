@@ -5,3 +5,9 @@ _site/
 # Server-only secrets — never commit. Provisioned on the server / via CI secrets.
 oauth/oauth-config.php
 smtp-config.php
+
+# Runtime/CI-generated CMS repo target (written on deploy; create locally for dev)
+admin/repo.json
+
+# Never commit archives (they can smuggle secrets)
+*.zip
