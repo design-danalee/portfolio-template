@@ -60,6 +60,19 @@
 .design-reset:hover {
   text-decoration: underline;
 }
+/* Size / letter-spacing sliders: label on its own line, full-width track below. */
+.design-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 0;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+}
+.design-slider .slider-wrap {
+  max-width: none;
+  width: 100%;
+}
 .slider-wrap {
   position: relative;
   flex: 1;

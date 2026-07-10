@@ -15,9 +15,10 @@ const TRACK_MIN = -0.05;
 const TRACK_MAX = 0.2;
 
 // A range slider with a vertical tick marking the built-in default value.
+// Stacked: label above, full-width track below (per mockup).
 function Slider({ label, min, max, step, value, def, onInput }) {
   const pct = Math.max(0, Math.min(100, ((def - min) / (max - min)) * 100));
-  return html`<label class="design-row">
+  return html`<label class="design-slider">
     <span class="design-label">${label}</span>
     <span class="slider-wrap">
       <input
