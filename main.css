@@ -224,9 +224,10 @@ a:hover{
 }
 
 .project-details > .hero{
-    font-family: var(--font-body), 'Schibsted Grotesk', sans-serif;
-    font-size: calc(var(--size-body) * var(--type-shrink));
-    letter-spacing: var(--tracking-body);
+    /* intro description uses the Heading style (matches section headings) */
+    font-family: var(--font-heading), 'Schibsted Grotesk', sans-serif;
+    font-size: calc(var(--size-heading) * var(--type-shrink));
+    letter-spacing: var(--tracking-heading);
     line-height: 140%;
 }
 
@@ -235,9 +236,10 @@ a:hover{
     padding-left: 6vw;
     padding-right: 6vw;
     align-content: center;
-    font-family: var(--font-caption), 'Schibsted Grotesk', sans-serif;
-    font-size: calc(var(--size-caption) * var(--type-shrink));
-    letter-spacing: var(--tracking-caption);
+    /* text_half is prose, not metadata → Body style (matches section body) */
+    font-family: var(--font-body), 'Schibsted Grotesk', sans-serif;
+    font-size: calc(var(--size-body) * var(--type-shrink));
+    letter-spacing: var(--tracking-body);
 }
 
 .wide-project-image {
