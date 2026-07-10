@@ -1,0 +1,14 @@
+{
+  "name": "hellodanalee-website",
+  "version": "1.0.0",
+  "description": "Portfolio site for Dana Lee, built with Eleventy + Decap CMS.",
+  "private": true,
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy",
+    "clean": "rm -rf _site"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

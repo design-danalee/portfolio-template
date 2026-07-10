@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home2/gadvxvmy/public_html/
+    - /bin/cp -R $DELIVERABLE_PATH/* $DEPLOYPATH

@@ -1,0 +1,65 @@
+---
+layout: layouts/base.njk
+permalink: contact.html
+title: Contact — Dana Lee
+pageStyles:
+  - contact.css
+pageScripts:
+  - contact.js
+footer:
+  left:  { href: "index.html#work", label: "Work",  id: "more-work" }
+  right: { href: "about.html",       label: "About", id: "about" }
+---
+<section class="introduction">
+    <section class="flex">
+        <h1 class="hero-text">{{ contact.hero }}</h1>
+    </section>
+</section>
+
+<section class="contact-section">
+    <!-- Success / error messages -->
+    <div id="form-status" class="mb-6 hidden rounded-2xl p-4 text-center text-lg"></div>
+
+    <form action="contact.php" method="POST" class="contact-form space-y-8" novalidate>
+        <div>
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" required />
+            <p class="field-error" id="name-error" hidden>Please enter your name.</p>
+        </div>
+        <div>
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" required />
+            <p class="field-error" id="email-error" hidden>Please enter a valid email address.</p>
+        </div>
+        <div>
+            <label for="organization">Organization</label>
+            <div class="select-wrap">
+                <select id="organization" name="organization">
+                    <option value="" disabled selected>Select one</option>
+                    {% for opt in contact.organizations %}<option>{{ opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div>
+            <label for="project">Project</label>
+            <div class="select-wrap">
+                <select id="project" name="project">
+                    <option value="" disabled selected>Select</option>
+                    {% for opt in contact.projects %}<option>{{ opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div>
+            <label for="message">Other notes</label>
+            <textarea id="message" name="message"></textarea>
+        </div>
+        <div>
+            <button type="submit" class="submit-btn">
+                <span>Send it</span>
+                <svg class="btn-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path></svg>
+            </button>
+        </div>
+    </form>
+</section>

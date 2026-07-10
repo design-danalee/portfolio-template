@@ -1,0 +1,7 @@
+node_modules/
+_site/
+.DS_Store
+
+# Server-only secrets — never commit. Provisioned on the server / via CI secrets.
+oauth/oauth-config.php
+smtp-config.php

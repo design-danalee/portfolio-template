@@ -1,0 +1,57 @@
+name: Deploy to Bluehost
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site (Eleventy)
+        run: npm run build
+
+      - name: Write OAuth proxy config (from repo secrets)
+        env:
+          CID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
+          CSECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+        run: |
+          mkdir -p _site/oauth
+          cat > _site/oauth/oauth-config.php <<PHP
+          <?php
+          return [
+              'client_id'     => '${CID}',
+              'client_secret' => '${CSECRET}',
+              'scope'         => 'repo',
+          ];
+          PHP
+
+      - name: Deploy to Bluehost via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: gad.vxv.mybluehost.me
+          username: deploy@gad.vxv.mybluehost.me
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Only the built site is uploaded now (not the raw source/templates).
+          local-dir: ./_site/
+          server-dir: /
+          # clean-slate is OFF so server-managed files that aren't in the build
+          # (smtp-config.php, phpmailer/, etc.) are preserved across deploys.
+          # Built files share the same names, so they overwrite cleanly.
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**

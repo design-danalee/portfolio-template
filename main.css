@@ -1,0 +1,302 @@
+body {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.2rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    cursor: none;
+    scroll-snap-stop: none;
+}
+
+.roundy {
+    border-radius: 4rem;
+    overflow: hidden;
+}
+
+a:hover{
+    cursor: none;  
+}
+.actionable:hover ~ .custom-cursor {
+    width: 40px;
+    height: 40px;
+}
+
+/* Nav Item */
+.nav-item {
+    display: inline-block;
+    position: relative;
+    padding: 8px 16px;
+    border-radius: 2rem;
+    background-color: transparent;
+    color: inherit;
+    text-decoration: none;
+    overflow: hidden;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Animated background expanding from the center */
+.nav-item::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    background-color: transparent;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+    z-index: -1;
+}
+
+/* Expands horizontally on hover */
+.nav-item:hover::before {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+/* Text color change on hover */
+.nav-item:hover {
+    color: white;
+}
+
+    /* Remove `opacity: 0` and instead scale the cursor properly */
+    .custom-cursor {
+        position: fixed;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        pointer-events: none;
+        mix-blend-mode: difference;
+        background-color: white;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s ease-out, height 0.2s ease, transform 0.1s ease-out;
+        z-index: 50;
+    }       
+    .hidden-header {
+        transform: translateY(-100%);
+    }
+    .scrolled-header {
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.6);
+    }
+    .hero-header {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+        color: white;
+    }
+
+    .introduction {
+        position: sticky;
+        width: 60vw;
+        padding-bottom: 2rem;
+        margin-left: auto;
+        margin-right: 5rem;
+        margin-bottom: 8rem;
+        height: 96vh;
+        justify-content: flex-end;
+        align-content: flex-end;
+    }
+    .hero-text {
+        font-family: 'Instrument Serif', serif;
+        font-style: italic;
+        font-size: 4.2rem;
+        line-height: 94%;
+    }
+    .sticky-title {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 50px;
+    }
+    .case-study-label{
+        height: 100%;
+        padding: 3em;
+        color: white;
+        width: 100%;
+        background: linear-gradient(
+            to left top,
+            transparent,
+            rgba(0, 0, 0, 0.35)
+        );
+    }
+
+    #case-study-header, .section-intro{
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        margin-top: 4rem;
+        margin-left: 8rem;
+        margin-right: 8rem;
+        margin-bottom: 8rem;
+        column-gap: 4rem;
+    }
+
+    .section-intro > .col-title{
+        grid-column: span 2;
+    }
+
+    .section-intro > .col-description{
+        grid-column: span 4;
+    }
+
+    .section-intro > .split{
+        grid-column: span 3;
+    }
+
+    .project-capabilities{
+        margin-top: 2rem;
+        margin-right: 4rem;
+        width: fit-content;
+        float: left;        
+    }
+
+    .project-capabilities > ul{
+        font-size: 1rem;
+        text-wrap: nowrap;   
+    }
+
+    .case-study {
+        height: 48vw;
+        background-size: 100vw;
+        background-repeat: no-repeat;
+        background-position: center;
+        animation-range: cover 0% cover 100%;
+        animation: bg-grow linear;
+        animation-timeline: view();
+        animation-iteration-count: 1;
+    }
+    @keyframes bg-grow {
+        to {
+            background-size: 120vw;
+        }
+    }
+
+
+/* Case Study Details */
+.hero-image{
+    height: 80vh;
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation-range: cover 0% cover 100%;
+    animation: wide-image-grow linear;
+    animation-timeline: view();
+    animation-iteration-count: 1;
+}
+    @keyframes wide-image-grow {
+        to {
+            background-size: 108vw;
+        }
+    }
+}
+
+.project-title{
+    padding-left: 2rem;
+    display: inline-block;
+    background-color: lightseagreen;
+}
+
+.project-details{
+    line-height: 135%;
+    padding-top: 0.25rem;
+    padding-right: 4rem;
+    display: inline-block;
+}
+
+.project-details > .hero{
+    font-size: 1.85rem;
+    line-height: 140%;
+}
+
+.project-caption{
+    height: 48vw;
+    padding-left: 6vw;
+    padding-right: 6vw;
+    align-content: center
+}
+
+.wide-project-image {
+    height: 48vw;
+    grid-column: span 6;
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation-range: cover 0% cover 100%;
+    animation: wide-image-grow linear;
+    animation-timeline: view();
+    animation-iteration-count: 1;
+}
+    @keyframes wide-image-grow {
+        to {
+            background-size: 108vw;
+        }
+    }
+
+.project-image{
+    height: 48vw;
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation-range: cover 0% cover 100%;
+    animation: project-image-grow linear;
+    animation-timeline: view();
+    animation-iteration-count: 1;
+}
+    @keyframes project-image-grow {
+        to {
+            background-size: 108vw;
+        }
+    }
+
+  video::-webkit-media-controls {
+  display: none;
+}
+
+.wide-project-image video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.bg-center { background-position: center; }
+.bg-top    { background-position: top; }
+.bg-bottom { background-position: bottom; }
+.bg-left   { background-position: left; }
+.bg-right  { background-position: right; }
+
+.bg-size-cover    { background-size: cover; }
+.bg-size-zoom-in  { background-size: 130%; }
+.bg-size-zoom-out { background-size: 70%; }
+.bg-size-contain  { background-size: contain; background-repeat: no-repeat; }
+
+/* Cropped images set an explicit background-position/background-size inline
+   (from the CMS crop tool), so they opt out of the default 100vw sizing and the
+   scroll-grow animation to stay exactly where the editor placed them. Applies
+   ONLY to images given a crop; all other images are unaffected. */
+.bg-cropped { animation: none !important; }
+
+.wide-project-image--natural {
+    height: auto;
+}
+
+.wide-project-image--natural video {
+    height: auto;
+    object-fit: unset;
+}
+
+.video-container {
+    height: 48vw;
+    margin: 2rem auto;
+    overflow: hidden; /* Hide video overflow */
+    position: relative; /* For positioning controls */
+}
+.my-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* or contain, depending on your preference */
+}
+#more-work, #about, #contact{
+    height: 48vw;
+}

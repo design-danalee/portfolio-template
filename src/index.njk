@@ -1,0 +1,30 @@
+---
+layout: layouts/base.njk
+permalink: index.html
+title: Dana Lee
+pageStyles:
+  - index.css
+footer:
+  left:  { href: "about.html",   label: "About",   id: "more-work" }
+  right: { href: "contact.html", label: "Contact", id: "contact" }
+---
+<section class="introduction">
+    <section class="flex">
+        <h1 class="hero-text">{{ home.hero }}</h1>
+    </section>
+</section>
+
+<section id="work" style="scroll-margin-top: 1rem;">
+    <div class="m-4 space-y-4 snap-mandatory">
+        {% for project in collections.project | sort(attribute="data.order") %}
+        <a href="{{ project.data.permalink }}" class="block snap-center">
+            <div class="case-study roundy flex" style="background-image: url('{{ project.data.card_image }}');">
+                <div class="case-study-label roundy">
+                    <h2 class="hero-text pb-2">{{ project.data.card_title }}</h2>
+                    <p class="text-xl">{{ project.data.card_tagline }}</p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>

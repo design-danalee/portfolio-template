@@ -1,0 +1,135 @@
+@media (max-width: 1024px) {
+    body{
+        font-size: 1rem;
+    }
+
+    .roundy {
+        border-radius: 1.5rem;
+    }
+    .grid-cols-2 {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero-text {
+        font-size: 3.5rem;
+    }
+    .introduction{
+        width: auto;
+        margin:2rem;
+        padding-bottom: 2rem;
+    }
+
+    .case-study {
+        height: 72vw;
+        background-size: 125vw;
+        background-repeat: no-repeat;
+        background-position: center;
+        animation-range: cover 0% cover 100%;
+        animation: case-study-grow linear;
+        animation-timeline: view();
+        animation-iteration-count: 1;
+    }
+        @keyframes case-study-grow {
+            to {
+                background-size: 140vw;
+            }
+        }
+
+    .case-study-label{
+        height: 100%;
+        padding: 2em;
+        width: 100%;
+        background: linear-gradient(
+            to left top,
+            transparent,
+            rgba(0, 0, 0, 0.35)
+        );
+    }
+
+    .project-type{
+        margin-top:0;
+        margin-bottom: 4rem;
+    }
+
+    /* Case Study Details */
+
+    .project-title{
+        margin-left: 2rem;
+        margin-right: 2rem;
+        margin-bottom: 0;
+        padding-top: 2rem;
+    }
+
+    .project-details{
+        margin-top:2rem;
+        margin-bottom: 0;
+        padding:0;
+    }
+
+    .project-details > .hero{
+        font-size: 1.5rem;
+        line-height: 140%;
+    }
+
+    .project-caption{
+        display: block;
+        height: auto;
+        padding: 2rem;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+        align-content: center;
+        text-wrap: pretty;
+    }
+
+    .project-capabilities{
+        font-size: 1rem;
+    }
+
+    #case-study-header, .section-intro{
+        grid-template-columns: repeat(6, 1fr);
+        margin-top: 4rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        margin-bottom: 4rem;
+        column-gap: 2rem;
+    }
+
+    .section-intro > .col-title{
+        grid-column: span 6;
+    }
+
+    .section-intro > .col-description{
+        grid-column: span 6;
+    }
+
+    .section-intro > .split{
+        grid-column: span 6;
+        margin-top:2rem;        
+    }
+
+    .wide-project-image .project-image{
+        height: 48vw;
+        background-size: 100vw;
+        background-repeat: no-repeat;
+        background-position: center;
+        animation-range: cover 0% cover 100%;
+        animation: bg-grow linear;
+        animation-timeline: view();
+        animation-iteration-count: 1;
+    }
+        @keyframes bg-grow {
+            to {
+                background-size: 110vw;
+            }
+        }
+
+
+    video{
+        width: 100%;
+    }
+
+    #more-work, #about, #contact {
+        height: 100vw;
+    }
+
+}

@@ -1,0 +1,78 @@
+---
+layout: layouts/base.njk
+footer:
+  left:  { href: "index.html#work", label: "More Work", id: "more-work" }
+  right: { href: "contact.html",     label: "Contact",   id: "about" }
+---
+{# ---- Row renderer: one cell inside a `grid grid-cols-6 gap-4` section ---- #}
+{% macro renderRow(row) %}
+  {% if row.type == "text_half" %}
+    <div class="project-caption col-span-6 md:col-span-3">
+        <p>{{ row.text }}</p>
+    </div>
+  {% elif row.type == "video_half" %}
+    <video class="project-image roundy col-span-6 md:col-span-3" src="{{ row.src }}" style="object-fit: cover;" autoplay loop muted playsinline></video>
+  {% elif row.type == "image_half" %}
+    <div class="project-image roundy col-span-6 md:col-span-3{% if row.crop %} bg-cropped{% else %}{% if row.fit %} {{ row.fit }}{% endif %}{% if row.zoom %} {{ row.zoom }}{% endif %}{% endif %}" style="background-image: url('{{ row.src }}');{% if row.crop %} background-position: {{ row.crop.x }}% {{ row.crop.y }}%; background-size: {{ row.crop.size }}%;{% endif %}"></div>
+  {% elif row.type == "video_full" %}
+    <div class="wide-project-image roundy col-span-6 md:col-span-6{% if row.natural_height %} wide-project-image--natural{% endif %}">
+        <video autoplay loop muted playsinline>
+            <source src="{{ row.src }}" type="video/mp4">
+        </video>
+    </div>
+  {% elif row.type == "image_full_natural" %}
+    <div class="roundy col-span-6 md:col-span-6">
+        <img src="{{ row.src }}" alt="{{ row.alt }}" style="width: 100%; height: auto; object-fit: cover;">
+    </div>
+  {% else %}{# image_full #}
+    <div class="wide-project-image roundy col-span-6 md:col-span-6{% if row.crop %} bg-cropped{% else %}{% if row.fit %} {{ row.fit }}{% endif %}{% endif %}" style="background-image: url('{{ row.src }}');{% if row.crop %} background-position: {{ row.crop.x }}% {{ row.crop.y }}%; background-size: {{ row.crop.size }}%;{% endif %}"></div>
+  {% endif %}
+{% endmacro %}
+
+{# ---- Hero image ---- #}
+<div class="wide-project-image" style="background-image: url('{{ hero_image }}');">
+</div>
+
+{# ---- Title, description, capabilities, meta ---- #}
+<section class="section-intro">
+    <div class="col-title">
+        <p class="hero-text mt-1">{{ title }}</p>
+    </div>
+    <div class="project-details col-description">
+        <p class="hero">{{ description }}</p>
+    </div>
+    <div class="col-title"></div>
+    <div class="col-description">
+        <div class="project-capabilities">
+            <ul>
+                {% for cap in capabilities %}<li>{{ cap }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="project-capabilities">
+            <ul>
+                {% for item in meta %}<li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+{# ---- Content sections ---- #}
+{% for section in sections %}
+  {% if section.heading %}
+    <section class="section-intro">
+        <div class="col-span-6 md:col-span-3">
+            <h1 class="hero-text">{{ section.heading }}</h1>
+        </div>
+        <div class="project-details col-span-6 md:col-span-3 md:pr-8">
+            <p>{{ section.body }}</p>
+        </div>
+    </section>
+  {% endif %}
+  {% if section.rows and section.rows.length %}
+    <section class="grid grid-cols-6 gap-4 px-4 mt-16">
+        {% for row in section.rows %}{{ renderRow(row) }}{% endfor %}
+    </section>
+  {% endif %}
+{% endfor %}

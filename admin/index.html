@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Content Manager — Dana Lee</title>
+
+    <!-- CSP (relaxed for dev; tightened in M6). Allows the Tailwind Play CDN
+         the site itself uses, Google Fonts, GitHub API, and repo/live images. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com;
+               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com;
+               font-src https://fonts.gstatic.com data:;
+               img-src 'self' data: blob: https:;
+               connect-src 'self' https://api.github.com https://github.com https://raw.githubusercontent.com;"
+    />
+
+    <!-- Same Tailwind + fonts + real site CSS the published pages use, so the
+         editing surface looks identical to what it publishes. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Schibsted+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/main.css" />
+    <link rel="stylesheet" href="/size-small.css" />
+    <link rel="stylesheet" href="/size-large.css" />
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="stylesheet" href="/about.css" />
+    <link rel="stylesheet" href="/contact.css" />
+    <!-- Admin chrome last so it wins for editor UI (scoped, doesn't touch content). -->
+    <link rel="stylesheet" href="/admin/styles/admin.css" />
+
+    <script type="importmap">
+      {
+        "imports": {
+          "preact": "/admin/vendor/preact.module.js",
+          "preact/hooks": "/admin/vendor/hooks.module.js",
+          "htm": "/admin/vendor/htm.module.js",
+          "js-yaml": "/admin/vendor/js-yaml.mjs",
+          "@/": "/admin/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/admin/app.js"></script>
+  </body>
+</html>

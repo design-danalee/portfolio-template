@@ -1,0 +1,53 @@
+/* Align body content to the hero text's left edge (.introduction is 60vw, pushed right with a 5rem right margin) */
+.about-section {
+    margin-left: calc(40vw - 5rem);
+    margin-right: 5rem;
+    margin-bottom: 6rem;
+    max-width: 40rem;
+}
+.about-section h2 {
+    margin-bottom: 1.5rem;
+}
+@media (max-width: 1024px) {
+    .about-section {
+        margin-left: 2rem;
+        margin-right: 2rem;
+        max-width: none;
+    }
+}
+.partner-tile {
+    line-height: 1.45;
+    padding: 5rem;
+}
+.partner-tile h3 {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+}
+@media (max-width: 1024px) {
+    .partner-tile {
+        aspect-ratio: auto;
+        padding: 2.5rem;
+    }
+}
+/* On mobile, anchor the hero text to the bottom of the screen with a 32px
+   gap. Use dvh (not vh) so the address bar can't push the last line off
+   the bottom and clip it. */
+@media (max-width: 1024px) {
+    .introduction {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        box-sizing: border-box;
+        height: auto;
+        min-height: 100dvh;
+        margin: 0 2rem 2rem;
+        padding: 0 0 2rem;
+    }
+}
+/* On mobile, make the footer buttons square (height matches full width). */
+@media (max-width: 767px) {
+    #more-work, #about, #contact {
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+}

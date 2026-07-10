@@ -1,0 +1,139 @@
+.contact-form label {
+    display: block;
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+}
+.contact-form input,
+.contact-form select {
+    width: 100%;
+    height: 80px;
+    background: #F5F5F5;
+    border: none;
+    border-radius: 1rem;
+    padding: 0 1.5rem;
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 1.2rem;
+    color: #111;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+.contact-form textarea {
+    width: 100%;
+    min-height: 220px;
+    background: #F5F5F5;
+    border: none;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 1.2rem;
+    color: #111;
+    outline: none;
+    resize: none;
+    transition: box-shadow 0.3s ease;
+}
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    box-shadow: inset 0 0 0 1.5px black;
+}
+/* Error state */
+.contact-form input.error,
+.contact-form input.error:focus {
+    box-shadow: inset 0 0 0 1.5px #d11;
+}
+.field-error {
+    color: #d11;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+.field-error[hidden] {
+    display: none;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #aaa;
+}
+/* Custom select: hide native arrow, draw our own */
+.select-wrap {
+    position: relative;
+}
+.contact-form select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: none;
+}
+.contact-form select.placeholder {
+    color: #aaa;
+}
+.select-wrap::after {
+    content: "↓";
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1.3rem;
+    color: #111;
+}
+.submit-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2.5rem;
+    background-color: black;
+    color: white;
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: none;
+}
+.submit-btn .btn-arrow {
+    height: 1.4rem;
+    width: 0;
+    opacity: 0;
+    margin-left: 0;
+    overflow: hidden;
+    fill: currentColor;
+    flex-shrink: 0;
+    transition: width 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;
+}
+.submit-btn:hover .btn-arrow {
+    width: 1.4rem;
+    opacity: 1;
+    margin-left: 0.6rem;
+}
+/* Align the form to the hero text's left edge (.introduction is 60vw, pushed right with a 5rem right margin) */
+.contact-section {
+    margin-left: calc(40vw - 5rem);
+    margin-right: 5rem;
+    margin-bottom: 4rem;
+}
+@media (max-width: 1024px) {
+    .contact-section {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+}
+/* On mobile, anchor the hero text to the bottom of the screen with a 32px
+   gap. Use dvh (not vh) so the address bar can't push the last line off
+   the bottom and clip it. */
+@media (max-width: 1024px) {
+    .introduction {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        box-sizing: border-box;
+        height: auto;
+        min-height: 100dvh;
+        margin: 0 2rem 2rem;
+        padding: 0 0 2rem;
+    }
+}
+/* On mobile, make the footer buttons square (height matches full width). */
+@media (max-width: 767px) {
+    #more-work, #about, #contact {
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+}

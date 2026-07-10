@@ -1,0 +1,43 @@
+/* Large Devices */
+    @media (min-width: 1440px) {
+        body{
+            font-size: 1.5rem;
+        }
+        
+        .case-study {
+            background-size: 180vh;
+        }
+        @keyframes bg-grow {
+            to {
+                background-size: 210vh;
+            }
+        }
+
+        .nav-item{
+            font-size: 1.5rem;
+        }
+
+        .project-image{
+            height: 48vw;
+            background-size: 100vw;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation-range: cover 0% cover 100%;
+            animation: bg-grow linear;
+            animation-timeline: view();
+            animation-iteration-count: 1;
+        }
+        @keyframes bg-grow {
+            to {
+                background-size: 110vw;
+            }
+        }
+        .project-details{
+            line-height: 135%;
+        }
+        .project-caption{
+            line-height: 135%;
+            padding-left: 8vw;
+            padding-right: 8vw;
+        }
+    }
