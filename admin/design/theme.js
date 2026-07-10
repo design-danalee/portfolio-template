@@ -10,10 +10,10 @@ const STYLE_KEYS = ["display", "heading", "body", "caption"];
 // Used when theme.json is absent (fresh template / not yet saved).
 export const DEFAULT_THEME = {
   styles: {
-    display: { font: "Instrument Serif", fontQuery: "Instrument+Serif:ital@1", size: 4.2 },
-    heading: { font: "Schibsted Grotesk", fontQuery: "Schibsted+Grotesk", size: 2.25 },
-    body: { font: "Schibsted Grotesk", fontQuery: "Schibsted+Grotesk", size: 1.2 },
-    caption: { font: "Schibsted Grotesk", fontQuery: "Schibsted+Grotesk", size: 1.0 },
+    display: { font: "Instrument Serif", fontQuery: "Instrument+Serif:ital@1", size: 4.2, tracking: 0 },
+    heading: { font: "Schibsted Grotesk", fontQuery: "Schibsted+Grotesk", size: 2.25, tracking: 0 },
+    body: { font: "Schibsted Grotesk", fontQuery: "Schibsted+Grotesk", size: 1.2, tracking: 0 },
+    caption: { font: "Schibsted Grotesk", fontQuery: "Schibsted+Grotesk", size: 1.0, tracking: 0 },
   },
   colors: { bg: "#ffffff", text: "#111827", accent: "#000000" },
   customFonts: [],
@@ -26,6 +26,7 @@ export function applyTheme(theme) {
     const st = s[key] || {};
     root.style.setProperty(`--font-${key}`, `"${st.font || ""}"`);
     root.style.setProperty(`--size-${key}`, `${st.size ?? 1}rem`);
+    root.style.setProperty(`--tracking-${key}`, `${st.tracking ?? 0}em`);
   });
   // Admin preview is desktop-scale; pin the responsive knob so .t-* calc()s
   // always resolve (the media-query overrides only matter on the live site).

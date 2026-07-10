@@ -22,6 +22,7 @@
 .partner-tile h3 {
     font-family: var(--font-heading), 'Schibsted Grotesk', sans-serif;
     font-size: calc(var(--size-heading) * var(--type-shrink));
+    letter-spacing: var(--tracking-heading);
     margin-bottom: 1rem;
 }
 @media (max-width: 1024px) {

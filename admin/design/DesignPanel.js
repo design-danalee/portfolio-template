@@ -1,8 +1,9 @@
 // In-CMS Design panel: 4 text styles (Display/Heading/Body/Caption), each with
-// its own font (curated Google list + uploaded custom fonts) and size, plus
-// site colors. Edits apply live (parent runs applyTheme on every change).
+// its own font, size, and letter-spacing, plus a per-style Reset and a default
+// marker on each slider. Site colors are global. Edits apply live.
 import { html } from "@/lib.js";
 import { FONTS, fontByName } from "@/design/fonts.js";
+import { DEFAULT_THEME } from "@/design/theme.js";
 
 const STYLES = [
   { key: "display", label: "Display / hero", min: 2, max: 7 },
@@ -10,11 +11,32 @@ const STYLES = [
   { key: "body", label: "Body", min: 0.85, max: 2 },
   { key: "caption", label: "Caption / meta", min: 0.7, max: 1.6 },
 ];
+const TRACK_MIN = -0.05;
+const TRACK_MAX = 0.2;
 
-function StyleRow({ style, def, customFonts, onFont, onSize }) {
+// A range slider with a vertical tick marking the built-in default value.
+function Slider({ label, min, max, step, value, def, onInput }) {
+  const pct = Math.max(0, Math.min(100, ((def - min) / (max - min)) * 100));
+  return html`<label class="design-row">
+    <span class="design-label">${label}</span>
+    <span class="slider-wrap">
+      <input
+        type="range" min=${min} max=${max} step=${step} value=${value}
+        onInput=${(e) => onInput(Number(e.target.value))}
+      />
+      <span class="slider-tick" title="Default" style=${`left:${pct}%`}></span>
+    </span>
+  </label>`;
+}
+
+function StyleRow({ def, style, defaults, customFonts, onFont, onSize, onTrack, onReset }) {
   const size = style.size ?? 1;
+  const tracking = style.tracking ?? 0;
   return html`<div class="design-style">
-    <div class="design-style-head">${def.label}</div>
+    <div class="design-style-head">
+      <span>${def.label}</span>
+      <button class="design-reset" title="Reset to default" onClick=${onReset}>↺ Reset</button>
+    </div>
     <label class="design-row">
       <span class="design-label">Font</span>
       <select class="design-select" value=${style.font} onChange=${(e) => onFont(e.target.value)}>
@@ -28,14 +50,16 @@ function StyleRow({ style, def, customFonts, onFont, onSize }) {
           : null}
       </select>
     </label>
-    <label class="design-row">
-      <span class="design-label">Size (${size}rem)</span>
-      <input
-        type="range" min=${def.min} max=${def.max} step="0.05"
-        value=${size}
-        onInput=${(e) => onSize(Number(e.target.value))}
-      />
-    </label>
+    <${Slider}
+      label=${`Size (${size}rem)`}
+      min=${def.min} max=${def.max} step="0.05"
+      value=${size} def=${defaults.size} onInput=${onSize}
+    />
+    <${Slider}
+      label=${`Letter spacing (${tracking}em)`}
+      min=${TRACK_MIN} max=${TRACK_MAX} step="0.005"
+      value=${tracking} def=${defaults.tracking ?? 0} onInput=${onTrack}
+    />
   </div>`;
 }
 
@@ -53,25 +77,29 @@ export function DesignPanel({ theme, update, onUploadFont }) {
   const customFonts = theme.customFonts || [];
   const setFont = (key) => (name) => {
     const curated = fontByName(name);
-    const fontQuery = curated ? curated.query : ""; // custom fonts load via @font-face
-    update({ style: key, patch: { font: name, fontQuery } });
+    update({ style: key, patch: { font: name, fontQuery: curated ? curated.query : "" } });
   };
   const setSize = (key) => (size) => update({ style: key, patch: { size } });
+  const setTrack = (key) => (tracking) => update({ style: key, patch: { tracking } });
+  const resetStyle = (key) => () => update({ style: key, patch: { ...DEFAULT_THEME.styles[key] } });
   const setColor = (k) => (val) => update({ color: k, value: val });
 
   return html`<div class="design-panel">
     <div class="design-controls">
       <h2>Design</h2>
-      <p class="design-intro">Set the font & size for each text style. Changes preview live and apply site-wide when you Save.</p>
+      <p class="design-intro">Set the font, size & letter-spacing for each text style. Changes preview live and apply site-wide when you Save. The tick on each slider marks the default.</p>
 
       <h3>Text styles</h3>
       ${STYLES.map(
         (def) => html`<${StyleRow}
           def=${def}
           style=${theme.styles[def.key]}
+          defaults=${DEFAULT_THEME.styles[def.key]}
           customFonts=${customFonts}
           onFont=${setFont(def.key)}
           onSize=${setSize(def.key)}
+          onTrack=${setTrack(def.key)}
+          onReset=${resetStyle(def.key)}
         />`
       )}
       <button class="design-upload" onClick=${onUploadFont}>⬆ Upload a font file…</button>

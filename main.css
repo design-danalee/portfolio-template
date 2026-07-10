@@ -8,6 +8,7 @@ body {
     font-weight: 400;
     font-style: normal;
     font-size: calc(var(--size-body) * var(--type-shrink));
+    letter-spacing: var(--tracking-body);
     background-color: var(--color-bg);
     color: var(--color-text);
     -webkit-font-smoothing: antialiased;
@@ -24,10 +25,10 @@ body {
 /* ---- Canonical text styles (edited in the CMS Design panel via theme.json) ----
    Four tokens only: Display, Heading, Body, Caption. Everything text-level maps
    to one of these; --type-shrink adapts them responsively (see size-small.css). */
-.t-display { font-family: var(--font-display), serif; font-size: calc(var(--size-display) * var(--type-shrink)); }
-.t-heading { font-family: var(--font-heading), sans-serif; font-size: calc(var(--size-heading) * var(--type-shrink)); }
-.t-body    { font-family: var(--font-body), sans-serif;    font-size: calc(var(--size-body) * var(--type-shrink)); }
-.t-caption { font-family: var(--font-caption), sans-serif; font-size: calc(var(--size-caption) * var(--type-shrink)); }
+.t-display { font-family: var(--font-display), serif; font-size: calc(var(--size-display) * var(--type-shrink)); letter-spacing: var(--tracking-display); }
+.t-heading { font-family: var(--font-heading), sans-serif; font-size: calc(var(--size-heading) * var(--type-shrink)); letter-spacing: var(--tracking-heading); }
+.t-body    { font-family: var(--font-body), sans-serif;    font-size: calc(var(--size-body) * var(--type-shrink)); letter-spacing: var(--tracking-body); }
+.t-caption { font-family: var(--font-caption), sans-serif; font-size: calc(var(--size-caption) * var(--type-shrink)); letter-spacing: var(--tracking-caption); }
 
 a:hover{
     cursor: none;  
@@ -118,6 +119,7 @@ a:hover{
         font-family: var(--font-display), 'Instrument Serif', serif;
         font-style: italic;
         font-size: calc(var(--size-display) * var(--type-shrink));
+        letter-spacing: var(--tracking-display);
         line-height: 94%;
     }
     .sticky-title {
@@ -169,6 +171,7 @@ a:hover{
     .project-capabilities > ul{
         font-family: var(--font-caption), 'Schibsted Grotesk', sans-serif;
         font-size: calc(var(--size-caption) * var(--type-shrink));
+        letter-spacing: var(--tracking-caption);
         text-wrap: nowrap;
     }
 
@@ -223,6 +226,7 @@ a:hover{
 .project-details > .hero{
     font-family: var(--font-body), 'Schibsted Grotesk', sans-serif;
     font-size: calc(var(--size-body) * var(--type-shrink));
+    letter-spacing: var(--tracking-body);
     line-height: 140%;
 }
 
@@ -233,6 +237,7 @@ a:hover{
     align-content: center;
     font-family: var(--font-caption), 'Schibsted Grotesk', sans-serif;
     font-size: calc(var(--size-caption) * var(--type-shrink));
+    letter-spacing: var(--tracking-caption);
 }
 
 .wide-project-image {

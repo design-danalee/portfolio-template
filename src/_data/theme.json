@@ -1,9 +1,9 @@
 {
   "styles": {
-    "display": { "font": "Instrument Serif", "fontQuery": "Instrument+Serif:ital@1", "size": 4.2 },
-    "heading": { "font": "Schibsted Grotesk", "fontQuery": "Schibsted+Grotesk", "size": 2.25 },
-    "body": { "font": "Schibsted Grotesk", "fontQuery": "Schibsted+Grotesk", "size": 1.2 },
-    "caption": { "font": "Schibsted Grotesk", "fontQuery": "Schibsted+Grotesk", "size": 1.0 }
+    "display": { "font": "Instrument Serif", "fontQuery": "Instrument+Serif:ital@1", "size": 4.2, "tracking": 0 },
+    "heading": { "font": "Schibsted Grotesk", "fontQuery": "Schibsted+Grotesk", "size": 2.25, "tracking": 0 },
+    "body": { "font": "Schibsted Grotesk", "fontQuery": "Schibsted+Grotesk", "size": 1.2, "tracking": 0 },
+    "caption": { "font": "Schibsted Grotesk", "fontQuery": "Schibsted+Grotesk", "size": 1.0, "tracking": 0 }
   },
   "colors": {
     "bg": "#ffffff",
