@@ -2,6 +2,103 @@
    Loaded AFTER the real site CSS. The editing surface uses the site's own
    classes/CSS; these rules style the toolbar, dashboard, and edit affordances. */
 
+/* ---- Design panel ---- */
+.design-panel {
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) 1fr;
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+  align-items: start;
+}
+.design-controls h2 {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+.design-controls h3 {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8a8a92;
+  margin: 22px 0 8px;
+}
+.design-intro {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  color: #6b6b72;
+  margin-bottom: 4px;
+}
+.design-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+}
+.design-label {
+  color: #46464c;
+  font-weight: 600;
+}
+.design-select {
+  flex: 1;
+  max-width: 220px;
+  padding: 7px 10px;
+  border: 1px solid var(--admin-line);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 14px;
+}
+.design-row input[type="range"] {
+  flex: 1;
+  max-width: 220px;
+}
+.design-color {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.design-color input[type="color"] {
+  width: 40px;
+  height: 28px;
+  border: 1px solid var(--admin-line);
+  border-radius: 8px;
+  background: #fff;
+  padding: 2px;
+}
+.design-color code {
+  font-size: 12px;
+  color: #8a8a92;
+}
+.design-preview-label {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9a9aa2;
+  margin-bottom: 10px;
+}
+.design-preview-card {
+  border: 1px solid var(--admin-line);
+  border-radius: 18px;
+  padding: 28px;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+.design-preview-card .hero-text {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+@media (max-width: 760px) {
+  .design-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
 :root {
   --admin-bar-h: 56px;
   --admin-accent: #2563eb;

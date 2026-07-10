@@ -6,14 +6,26 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>">
     <title>{{ title }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Schibsted+Grotesk&display=swap" rel="stylesheet">
+    {# ---- Theme: driven by src/_data/theme.json, editable in the CMS Design panel ---- #}
+    <link href="https://fonts.googleapis.com/css2?family={{ theme.fontDisplayQuery }}&family={{ theme.fontBodyQuery }}&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --font-display: "{{ theme.fontDisplay }}";
+        --font-body: "{{ theme.fontBody }}";
+        --text-scale: {{ theme.textScale }};
+        --color-bg: {{ theme.colors.bg }};
+        --color-text: {{ theme.colors.text }};
+        --color-accent: {{ theme.colors.accent }};
+      }
+      html { font-size: calc(100% * var(--text-scale)); }
+    </style>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="size-small.css">
     <link rel="stylesheet" href="size-large.css">
     {% for href in pageStyles %}<link rel="stylesheet" href="{{ href }}">
     {% endfor %}
 </head>
-<body class="bg-white text-gray-900">
+<body>
     <main>
         {% include "partials/header.njk" %}
 {{ content | safe }}

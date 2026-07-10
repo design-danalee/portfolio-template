@@ -1,0 +1,12 @@
+{
+  "fontDisplay": "Instrument Serif",
+  "fontDisplayQuery": "Instrument+Serif:ital@1",
+  "fontBody": "Schibsted Grotesk",
+  "fontBodyQuery": "Schibsted+Grotesk",
+  "textScale": 1,
+  "colors": {
+    "bg": "#ffffff",
+    "text": "#111827",
+    "accent": "#000000"
+  }
+}

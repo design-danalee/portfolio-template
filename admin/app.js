@@ -34,6 +34,8 @@ import {
   clearToken,
   loginWithGitHub,
 } from "@/auth/oauth.js";
+import { DesignPanel } from "@/design/DesignPanel.js";
+import { applyTheme, serializeTheme, THEME_FILE, DEFAULT_THEME } from "@/design/theme.js";
 
 const client = makeClient(getToken);
 const contents = makeContents(client);
@@ -74,13 +76,19 @@ function App() {
     (async () => {
       try {
         await loadRepoConfig(); // resolve owner/repo/branch before any API call
-        const [projects, home, about, contact] = await Promise.all([
+        const [projects, home, about, contact, themeData] = await Promise.all([
           projectsApi.list(),
           pagesApi.load("home"),
           pagesApi.load("about"),
           pagesApi.load("contact"),
+          contents
+            .read(THEME_FILE)
+            .then((r) => JSON.parse(r.text))
+            .catch(() => DEFAULT_THEME), // theme.json missing → sensible defaults
         ]);
-        setStore({ projects, pages: { home, about, contact } });
+        const theme = { path: THEME_FILE, data: themeData };
+        applyTheme(theme.data);
+        setStore({ projects, pages: { home, about, contact }, theme });
       } catch (e) {
         setLoadErr(e.message || String(e));
       }
@@ -113,6 +121,15 @@ function App() {
       };
     });
     markDirty(PAGE_FILES[name]);
+  }, []);
+
+  const updateTheme = useCallback((patch) => {
+    setStore((s) => {
+      const data = { ...s.theme.data, ...patch };
+      applyTheme(data); // live preview across the surface
+      return { ...s, theme: { ...s.theme, data } };
+    });
+    markDirty(THEME_FILE);
   }, []);
 
   async function ensureAuth() {
@@ -163,6 +180,9 @@ function App() {
           const project = store.projects.find((p) => p.slug === slug);
           files.push({ path, content: serializeProject(project) });
           labels.push(project.data.title || slug);
+        } else if (path === THEME_FILE) {
+          files.push({ path, content: serializeTheme(store.theme.data) });
+          labels.push("design");
         } else {
           const name = Object.keys(PAGE_FILES).find((n) => PAGE_FILES[n] === path);
           files.push({ path, content: serializePage(store.pages[name]) });
@@ -322,7 +342,10 @@ function App() {
   let view;
   const pm = /^#\/project\/(.+)$/.exec(hash);
   const gm = /^#\/page\/(home|about|contact)$/.exec(hash);
-  if (pm) {
+  const dm = /^#\/design$/.test(hash);
+  if (dm) {
+    view = html`<${DesignPanel} theme=${store.theme.data} update=${updateTheme} />`;
+  } else if (pm) {
     const slug = decodeURIComponent(pm[1]);
     const project = store.projects.find((p) => p.slug === slug);
     view = project
@@ -347,7 +370,9 @@ function App() {
     view = html`<${Dashboard} store=${store} onNew=${createProject} />`;
   }
 
-  const title = pm
+  const title = dm
+    ? "Design"
+    : pm
     ? store.projects.find((p) => p.slug === decodeURIComponent(pm[1]))?.data
         .title || "Case study"
     : gm
@@ -357,7 +382,8 @@ function App() {
   return html`<div class=${"admin-root" + (editable ? " is-editing" : "")}>
     <${Toolbar}
       title=${title}
-      isDashboard=${!pm && !gm}
+      isDashboard=${!pm && !gm && !dm}
+      showToggle=${!!(pm || gm)}
       editable=${editable}
       setEditable=${setEditable}
       dirtyCount=${dirty.size}
@@ -477,11 +503,13 @@ function Toolbar(props) {
     <div class="admin-bar-center">
       ${!props.isDashboard
         ? html`<span class="admin-title">${props.title}</span>
-            <span class="admin-viewtag">${props.editable ? "Edit view" : "Preview"}</span>`
+            ${props.showToggle
+              ? html`<span class="admin-viewtag">${props.editable ? "Edit view" : "Preview"}</span>`
+              : null}`
         : null}
     </div>
     <div class="admin-bar-right">
-      ${!props.isDashboard
+      ${props.showToggle
         ? html`<button
             class=${"admin-btn" + (props.editable ? "" : " is-on")}
             onClick=${() => props.setEditable(!props.editable)}
@@ -521,6 +549,11 @@ function Dashboard({ store, onNew }) {
             <span class="admin-card-title">${n[0].toUpperCase() + n.slice(1)}</span>
           </a>`
         )}
+        <a class="admin-card" href="#/design" key="design">
+          <span class="admin-card-kicker">Site</span>
+          <span class="admin-card-title">Design</span>
+          <span class="admin-card-sub">Fonts, text size, colors</span>
+        </a>
       </div>
     </section>
     <section>
