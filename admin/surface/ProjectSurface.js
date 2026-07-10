@@ -157,7 +157,7 @@ export function ProjectSurface({ project, editable, update, onImageClick }) {
               <div class="col-span-6 md:col-span-3">
                 <${EditableText}
                   tag="h1"
-                  class="t-heading"
+                  class="hero-text"
                   value=${section.heading}
                   editable=${editable}
                   placeholder="Section heading (optional)"
