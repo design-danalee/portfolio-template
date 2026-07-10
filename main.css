@@ -1,8 +1,13 @@
+/* Base responsive knob. theme.json tokens (--font-*/--size-*/--color-*) are
+   injected by base.njk (site) or applyTheme (admin); --type-shrink stays 1 here
+   and is overridden per breakpoint in size-small.css / size-large.css. */
+:root { --type-shrink: 1; }
+
 body {
     font-family: var(--font-body), 'Schibsted Grotesk', sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 1.2rem;
+    font-size: calc(var(--size-body) * var(--type-shrink));
     background-color: var(--color-bg);
     color: var(--color-text);
     -webkit-font-smoothing: antialiased;
@@ -15,6 +20,14 @@ body {
     border-radius: 4rem;
     overflow: hidden;
 }
+
+/* ---- Canonical text styles (edited in the CMS Design panel via theme.json) ----
+   Four tokens only: Display, Heading, Body, Caption. Everything text-level maps
+   to one of these; --type-shrink adapts them responsively (see size-small.css). */
+.t-display { font-family: var(--font-display), serif; font-size: calc(var(--size-display) * var(--type-shrink)); }
+.t-heading { font-family: var(--font-heading), sans-serif; font-size: calc(var(--size-heading) * var(--type-shrink)); }
+.t-body    { font-family: var(--font-body), sans-serif;    font-size: calc(var(--size-body) * var(--type-shrink)); }
+.t-caption { font-family: var(--font-caption), sans-serif; font-size: calc(var(--size-caption) * var(--type-shrink)); }
 
 a:hover{
     cursor: none;  
@@ -104,7 +117,7 @@ a:hover{
     .hero-text {
         font-family: var(--font-display), 'Instrument Serif', serif;
         font-style: italic;
-        font-size: 4.2rem;
+        font-size: calc(var(--size-display) * var(--type-shrink));
         line-height: 94%;
     }
     .sticky-title {
@@ -154,8 +167,9 @@ a:hover{
     }
 
     .project-capabilities > ul{
-        font-size: 1rem;
-        text-wrap: nowrap;   
+        font-family: var(--font-caption), 'Schibsted Grotesk', sans-serif;
+        font-size: calc(var(--size-caption) * var(--type-shrink));
+        text-wrap: nowrap;
     }
 
     .case-study {
@@ -207,7 +221,8 @@ a:hover{
 }
 
 .project-details > .hero{
-    font-size: 1.85rem;
+    font-family: var(--font-body), 'Schibsted Grotesk', sans-serif;
+    font-size: calc(var(--size-body) * var(--type-shrink));
     line-height: 140%;
 }
 
@@ -215,7 +230,9 @@ a:hover{
     height: 48vw;
     padding-left: 6vw;
     padding-right: 6vw;
-    align-content: center
+    align-content: center;
+    font-family: var(--font-caption), 'Schibsted Grotesk', sans-serif;
+    font-size: calc(var(--size-caption) * var(--type-shrink));
 }
 
 .wide-project-image {

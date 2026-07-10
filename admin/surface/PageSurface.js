@@ -46,7 +46,7 @@ function HomeSurface({ page, editable, updatePage, projects, updateProject, navi
                 />
                 <${EditableText}
                   tag="p"
-                  class="text-xl"
+                  class="t-body"
                   value=${p.data.card_tagline}
                   editable=${editable}
                   placeholder="Card tagline"
@@ -117,7 +117,7 @@ function AboutSurface({ page, editable, updatePage }) {
           : null}
         <${EditableText}
           tag="h2"
-          class="text-4xl"
+          class="t-heading"
           value=${section.heading}
           editable=${editable}
           onCommit=${(t) => setSection(i, { heading: t })}
@@ -154,7 +154,7 @@ function AboutSurface({ page, editable, updatePage }) {
               : null}
             <${EditableText}
               tag="h3"
-              class="text-2xl mb-3"
+              class="t-heading mb-3"
               value=${tile.title}
               editable=${editable}
               onCommit=${(t) => setTile(i, { title: t })}
@@ -187,13 +187,13 @@ function AboutSurface({ page, editable, updatePage }) {
           class="partner-tile roundy aspect-square flex items-center justify-center text-center"
           style="background-color: #F5F5F5;"
         >
-          <p class="text-4xl">${(d.dataPoints.facts || [])[0] || ""}</p>
+          <p class="t-heading">${(d.dataPoints.facts || [])[0] || ""}</p>
         </div>
         <div
           class="partner-tile roundy aspect-square flex items-center justify-center text-center"
           style="background-color: #29292E; color: #ffffff;"
         >
-          <span class="text-4xl">Roll the Dice</span>
+          <span class="t-heading">Roll the Dice</span>
         </div>
       </div>
       ${editable

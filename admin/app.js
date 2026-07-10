@@ -123,14 +123,63 @@ function App() {
     markDirty(PAGE_FILES[name]);
   }, []);
 
-  const updateTheme = useCallback((patch) => {
+  // Accepts { style, patch } (merge into one text style), { color, value }, or a
+  // plain object (e.g. { customFonts }). Always merges against the LATEST store
+  // so rapid edits never clobber each other.
+  const updateTheme = useCallback((change) => {
     setStore((s) => {
-      const data = { ...s.theme.data, ...patch };
+      const cur = s.theme.data;
+      let data;
+      if (change.style) {
+        data = {
+          ...cur,
+          styles: {
+            ...cur.styles,
+            [change.style]: { ...cur.styles[change.style], ...change.patch },
+          },
+        };
+      } else if (change.color) {
+        data = { ...cur, colors: { ...cur.colors, [change.color]: change.value } };
+      } else {
+        data = { ...cur, ...change };
+      }
       applyTheme(data); // live preview across the surface
       return { ...s, theme: { ...s.theme, data } };
     });
     markDirty(THEME_FILE);
   }, []);
+
+  // Upload a custom font file: stage the blob for commit, add it to the theme's
+  // customFonts, and make it selectable for any style.
+  async function uploadFont() {
+    const file = await openFilePicker(".woff2,.woff,.ttf,.otf");
+    if (!file) return;
+    if (!/\.(woff2|woff|ttf|otf)$/i.test(file.name)) {
+      setMsg({ kind: "error", text: "Choose a .woff2, .woff, .ttf, or .otf font file." });
+      return;
+    }
+    const { dataUrl, base64 } = await readFile(file);
+    const clean = file.name
+      .toLowerCase()
+      .replace(/[^a-z0-9.]+/g, "-")
+      .replace(/-*\.-*/g, ".")
+      .replace(/^-+|-+$/g, "");
+    const path = "assets/fonts/" + clean;
+    const name =
+      file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim() || "Custom font";
+    const format = /\.woff2$/i.test(file.name)
+      ? "woff2"
+      : /\.woff$/i.test(file.name)
+      ? "woff"
+      : /\.otf$/i.test(file.name)
+      ? "opentype"
+      : "truetype";
+    setAssetOverride(path, dataUrl); // instant preview via @font-face
+    setPendingMedia((m) => ({ ...m, [path]: { base64 } }));
+    const existing = (store.theme.data.customFonts || []).filter((c) => c.name !== name);
+    updateTheme({ customFonts: [...existing, { name, file: path, format }] });
+    setMsg({ kind: "info", text: `Added font "${name}" — pick it for any style above.` });
+  }
 
   async function ensureAuth() {
     if (getToken()) {
@@ -344,7 +393,11 @@ function App() {
   const gm = /^#\/page\/(home|about|contact)$/.exec(hash);
   const dm = /^#\/design$/.test(hash);
   if (dm) {
-    view = html`<${DesignPanel} theme=${store.theme.data} update=${updateTheme} />`;
+    view = html`<${DesignPanel}
+      theme=${store.theme.data}
+      update=${updateTheme}
+      onUploadFont=${uploadFont}
+    />`;
   } else if (pm) {
     const slug = decodeURIComponent(pm[1]);
     const project = store.projects.find((p) => p.slug === slug);

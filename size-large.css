@@ -1,9 +1,10 @@
 /* Large Devices */
     @media (min-width: 1440px) {
-        body{
-            font-size: 1.5rem;
+        /* One knob grows all four text styles on large screens. */
+        :root {
+            --type-shrink: 1.15;
         }
-        
+
         .case-study {
             background-size: 180vh;
         }
@@ -11,10 +12,6 @@
             to {
                 background-size: 210vh;
             }
-        }
-
-        .nav-item{
-            font-size: 1.5rem;
         }
 
         .project-image{

@@ -18,7 +18,7 @@ footer:
 
 {% for section in about.sections %}
 <section class="about-section">
-    <h2 class="text-4xl">{{ section.heading }}</h2>
+    <h2 class="t-heading">{{ section.heading }}</h2>
     <p>{{ section.body }}</p>
 </section>
 {% endfor %}
@@ -28,7 +28,7 @@ footer:
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {% for tile in about.partner.tiles %}
         <div class="partner-tile roundy aspect-square flex flex-col justify-between" style="background-color: #F5F5F5;">
-            <h3 class="text-2xl mb-3">{{ tile.title }}</h3>
+            <h3 class="t-heading mb-3">{{ tile.title }}</h3>
             <p>{{ tile.body }}</p>
         </div>
         {% endfor %}
@@ -39,10 +39,10 @@ footer:
     <h2 class="hero-text mb-10">{{ about.dataPoints.heading }}</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="partner-tile roundy aspect-square flex items-center justify-center text-center" style="background-color: #F5F5F5;">
-            <p id="random-fact" class="text-4xl">{{ about.dataPoints.facts[0] }}</p>
+            <p id="random-fact" class="t-heading">{{ about.dataPoints.facts[0] }}</p>
         </div>
         <button id="roll-dice" type="button" class="partner-tile roundy aspect-square flex items-center justify-center text-center" style="background-color: #29292E; color: #ffffff; cursor: none;">
-            <span class="text-4xl">Roll the Dice</span>
+            <span class="t-heading">Roll the Dice</span>
         </button>
     </div>
     {# Facts are emitted here so the copy stays editable in the CMS; about.js reads them. #}

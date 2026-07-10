@@ -1,6 +1,8 @@
 @media (max-width: 1024px) {
-    body{
-        font-size: 1rem;
+    /* One knob shrinks all four text styles on small screens (replaces the old
+       per-element font-size overrides). */
+    :root {
+        --type-shrink: 0.83;
     }
 
     .roundy {
@@ -10,9 +12,6 @@
         grid-template-columns: 1fr !important;
     }
 
-    .hero-text {
-        font-size: 3.5rem;
-    }
     .introduction{
         width: auto;
         margin:2rem;
@@ -67,7 +66,6 @@
     }
 
     .project-details > .hero{
-        font-size: 1.5rem;
         line-height: 140%;
     }
 
@@ -79,10 +77,6 @@
         padding-bottom: 4rem;
         align-content: center;
         text-wrap: pretty;
-    }
-
-    .project-capabilities{
-        font-size: 1rem;
     }
 
     #case-study-header, .section-intro{

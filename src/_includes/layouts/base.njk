@@ -6,18 +6,27 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>">
     <title>{{ title }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    {# ---- Theme: driven by src/_data/theme.json, editable in the CMS Design panel ---- #}
-    <link href="https://fonts.googleapis.com/css2?family={{ theme.fontDisplayQuery }}&family={{ theme.fontBodyQuery }}&display=swap" rel="stylesheet">
+    {# ---- Theme: 4 text styles (Display/Heading/Body/Caption), driven by
+           src/_data/theme.json, editable in the CMS Design panel ---- #}
+    {% for s in [theme.styles.display, theme.styles.heading, theme.styles.body, theme.styles.caption] %}{% if s.fontQuery %}<link href="https://fonts.googleapis.com/css2?family={{ s.fontQuery }}&display=swap" rel="stylesheet">
+    {% endif %}{% endfor %}
+    {% for cf in theme.customFonts %}<style>@font-face { font-family: "{{ cf.name }}"; src: url("/{{ cf.file }}") format("{{ cf.format }}"); font-display: swap; }</style>
+    {% endfor %}
     <style>
       :root {
-        --font-display: "{{ theme.fontDisplay }}";
-        --font-body: "{{ theme.fontBody }}";
-        --text-scale: {{ theme.textScale }};
+        --font-display: "{{ theme.styles.display.font }}";
+        --font-heading: "{{ theme.styles.heading.font }}";
+        --font-body: "{{ theme.styles.body.font }}";
+        --font-caption: "{{ theme.styles.caption.font }}";
+        --size-display: {{ theme.styles.display.size }}rem;
+        --size-heading: {{ theme.styles.heading.size }}rem;
+        --size-body: {{ theme.styles.body.size }}rem;
+        --size-caption: {{ theme.styles.caption.size }}rem;
+        --type-shrink: 1;
         --color-bg: {{ theme.colors.bg }};
         --color-text: {{ theme.colors.text }};
         --color-accent: {{ theme.colors.accent }};
       }
-      html { font-size: calc(100% * var(--text-scale)); }
     </style>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="size-small.css">

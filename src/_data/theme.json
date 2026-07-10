@@ -1,12 +1,14 @@
 {
-  "fontDisplay": "Instrument Serif",
-  "fontDisplayQuery": "Instrument+Serif:ital@1",
-  "fontBody": "Schibsted Grotesk",
-  "fontBodyQuery": "Schibsted+Grotesk",
-  "textScale": 1,
+  "styles": {
+    "display": { "font": "Instrument Serif", "fontQuery": "Instrument+Serif:ital@1", "size": 4.2 },
+    "heading": { "font": "Schibsted Grotesk", "fontQuery": "Schibsted+Grotesk", "size": 2.25 },
+    "body": { "font": "Schibsted Grotesk", "fontQuery": "Schibsted+Grotesk", "size": 1.2 },
+    "caption": { "font": "Schibsted Grotesk", "fontQuery": "Schibsted+Grotesk", "size": 1.0 }
+  },
   "colors": {
     "bg": "#ffffff",
     "text": "#111827",
     "accent": "#000000"
-  }
+  },
+  "customFonts": []
 }
