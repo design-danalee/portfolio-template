@@ -23,6 +23,23 @@ require __DIR__ . '/phpmailer/src/SMTP.php';
 
 $cfg = require __DIR__ . '/smtp-config.php';
 
+// Recipient + subject come from the CMS (src/_data/contact.json → built into
+// /contact-config.json). Fall back to the server SMTP config if unset.
+$recipient = $cfg['to'];
+$subject   = 'New message from your website';
+$ccPath    = __DIR__ . '/contact-config.json';
+if (is_readable($ccPath)) {
+    $cc = json_decode(file_get_contents($ccPath), true);
+    if (is_array($cc)) {
+        if (!empty($cc['notifyEmail']) && filter_var($cc['notifyEmail'], FILTER_VALIDATE_EMAIL)) {
+            $recipient = $cc['notifyEmail'];
+        }
+        if (!empty($cc['formSubject'])) {
+            $subject = $cc['formSubject'];
+        }
+    }
+}
+
 $mail = new PHPMailer(true);
 try {
     $mail->isSMTP();
@@ -37,12 +54,12 @@ try {
     // Gmail requires the From to be the authenticated account; the visitor's
     // address goes on Reply-To so you can reply straight to them.
     $mail->setFrom($cfg['from'], $cfg['from_name']);
-    $mail->addAddress($cfg['to']);
+    $mail->addAddress($recipient);
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $mail->addReplyTo($email, $name !== '' ? $name : $email);
     }
 
-    $mail->Subject = "New message from hellodanalee.com";
+    $mail->Subject = $subject;
     $mail->Body    = "Name: $name\n"
                    . "Email: $email\n"
                    . "Organization: $organization\n"

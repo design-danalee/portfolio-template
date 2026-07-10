@@ -251,6 +251,29 @@ function ContactSurface({ page, editable, updatePage }) {
     <section class="contact-section">
       ${editable
         ? html`<div>
+            <div class="admin-listblock">
+              <p class="admin-listblock-label">Where form messages are sent</p>
+              <p class="admin-field-label">Notification email</p>
+              <${EditableText}
+                class="admin-field"
+                value=${d.notifyEmail}
+                editable=${editable}
+                placeholder="you@example.com"
+                onCommit=${(t) => updatePage({ notifyEmail: t.trim() })}
+              />
+              <p class="admin-field-label">Email subject line</p>
+              <${EditableText}
+                class="admin-field"
+                value=${d.formSubject}
+                editable=${editable}
+                placeholder="New message from your website"
+                onCommit=${(t) => updatePage({ formSubject: t })}
+              />
+              <p class="admin-field-hint">
+                Messages from your contact form go to this address. (Your email
+                account's send credentials are set once on the server — see the guide.)
+              </p>
+            </div>
             ${OptionList("organizations", "Organization dropdown options")}
             ${OptionList("projects", "Project dropdown options")}
           </div>`

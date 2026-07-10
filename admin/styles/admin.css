@@ -209,6 +209,28 @@ body {
   color: #8a8a92;
   margin-bottom: 8px;
 }
+.admin-field-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b6b72;
+  margin: 10px 0 4px;
+}
+.admin-field {
+  display: block;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  padding: 8px 12px;
+  border: 1px solid var(--admin-line);
+  border-radius: 10px;
+  background: #fff;
+  min-width: 260px;
+}
+.admin-field-hint {
+  font-size: 12px;
+  color: #9a9aa2;
+  margin-top: 10px;
+  max-width: 460px;
+}
 .admin-listblock ul {
   list-style: disc;
   padding-left: 20px;

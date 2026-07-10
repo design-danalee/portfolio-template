@@ -1,0 +1,8 @@
+---
+permalink: /contact-config.json
+eleventyExcludeFromCollections: true
+---
+{
+  "notifyEmail": {{ contact.notifyEmail | dump | safe }},
+  "formSubject": {{ contact.formSubject | dump | safe }}
+}

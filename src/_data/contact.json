@@ -1,5 +1,7 @@
 {
   "hero": "Let's talk. I'm great in meetings, dangerous with typography, and fun at parties.",
+  "notifyEmail": "",
+  "formSubject": "New message from your website",
   "organizations": [
     "Start-Up",
     "Non-Profit",
