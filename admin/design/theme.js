@@ -11,7 +11,7 @@ const STYLE_KEYS = ["display", "heading", "body", "caption"];
 export const DEFAULT_THEME = {
   styles: {
     display: { font: "Instrument Serif", fontQuery: "Instrument+Serif:ital@1", size: 4.2, tracking: 0 },
-    heading: { font: "Schibsted Grotesk", fontQuery: "Schibsted+Grotesk", size: 2.25, tracking: 0 },
+    heading: { font: "Schibsted Grotesk", fontQuery: "Schibsted+Grotesk", size: 1.85, tracking: 0 },
     body: { font: "Schibsted Grotesk", fontQuery: "Schibsted+Grotesk", size: 1.2, tracking: 0 },
     caption: { font: "Schibsted Grotesk", fontQuery: "Schibsted+Grotesk", size: 1.0, tracking: 0 },
   },
