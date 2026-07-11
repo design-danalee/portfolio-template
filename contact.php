@@ -7,11 +7,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-$name         = trim($_POST['name'] ?? '');
-$email        = trim($_POST['email'] ?? '');
-$organization = trim($_POST['organization'] ?? '');
-$project      = trim($_POST['project'] ?? '');
-$message      = trim($_POST['message'] ?? '');
+// The visitor's email address is a guaranteed field (the CMS won't let it be
+// deleted or retyped — see admin/surface/PageSurface.js), so it's always safe
+// to read directly. "name" is a normal, deletable field: fall back to the
+// email address as the display name if it's gone.
+$email = trim($_POST['email'] ?? '');
+$name  = trim($_POST['name'] ?? '') ?: $email;
 
 // Load PHPMailer.
 // Manual install: upload the PHPMailer "src" folder so these paths exist.
@@ -27,6 +28,7 @@ $cfg = require __DIR__ . '/smtp-config.php';
 // /contact-config.json). Fall back to the server SMTP config if unset.
 $recipient = $cfg['to'];
 $subject   = 'New message from your website';
+$fields    = []; // [{id, label}, ...] — whatever fields the CMS currently defines
 $ccPath    = __DIR__ . '/contact-config.json';
 if (is_readable($ccPath)) {
     $cc = json_decode(file_get_contents($ccPath), true);
@@ -37,8 +39,21 @@ if (is_readable($ccPath)) {
         if (!empty($cc['formSubject'])) {
             $subject = $cc['formSubject'];
         }
+        if (!empty($cc['fields']) && is_array($cc['fields'])) {
+            $fields = $cc['fields'];
+        }
     }
 }
+
+// Build the email body from whatever fields the CMS currently defines, in
+// order, using each field's current label — not a hardcoded field list.
+$bodyLines = [];
+foreach ($fields as $field) {
+    if (empty($field['id']) || empty($field['label'])) continue;
+    $value = trim($_POST[$field['id']] ?? '');
+    $bodyLines[] = "{$field['label']}: {$value}";
+}
+$body = implode("\n", $bodyLines);
 
 $mail = new PHPMailer(true);
 try {
@@ -60,11 +75,7 @@ try {
     }
 
     $mail->Subject = $subject;
-    $mail->Body    = "Name: $name\n"
-                   . "Email: $email\n"
-                   . "Organization: $organization\n"
-                   . "Project: $project\n\n"
-                   . "Other notes:\n$message";
+    $mail->Body    = $body;
 
     $mail->send();
     header("Location: contact.html?status=success");

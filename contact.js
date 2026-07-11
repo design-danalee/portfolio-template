@@ -5,49 +5,47 @@ document.querySelectorAll('.contact-form select').forEach((sel) => {
     sel.addEventListener('change', sync);
 });
 
-// Custom error states (replacing the browser's default validation bubbles)
+// Custom error states (replacing the browser's default validation bubbles).
+// Field-agnostic: works for however many required fields the CMS defines.
 const contactForm = document.querySelector('.contact-form');
-const nameInput = document.getElementById('name');
-const nameError = document.getElementById('name-error');
-const emailInput = document.getElementById('email');
-const emailError = document.getElementById('email-error');
+const requiredFields = [...contactForm.querySelectorAll('[required]')].map((input) => ({
+    input,
+    error: document.getElementById(input.id + '-error'),
+}));
 
 const showError = (input, msgEl, invalid) => {
     input.classList.toggle('error', invalid);
-    msgEl.hidden = !invalid;
+    if (msgEl) msgEl.hidden = !invalid;
 };
 
-// Name is required
-const validateName = (force = false) => {
-    const invalid = nameInput.value.trim() === '';
-    showError(nameInput, nameError, invalid);
-    return !invalid;
-};
-// Email is required and must be a valid address.
+// Required + (for <input type="email">) must be a valid address.
 // On blur we only flag a badly-formatted value; emptiness is only flagged on submit.
-const validateEmail = (force = false) => {
-    const value = emailInput.value.trim();
-    const invalid = force ? (value === '' || !emailInput.checkValidity())
-                          : (value !== '' && !emailInput.checkValidity());
-    showError(emailInput, emailError, invalid);
-    return value !== '' && emailInput.checkValidity();
+const validateField = ({ input, error }, force = false) => {
+    const value = input.value.trim();
+    const isEmail = input.type === 'email';
+    const invalid = force
+        ? value === '' || (isEmail && !input.checkValidity())
+        : value !== '' && isEmail && !input.checkValidity();
+    showError(input, error, invalid);
+    return value !== '' && (!isEmail || input.checkValidity());
 };
 
-nameInput.addEventListener('blur', () => validateName());
-nameInput.addEventListener('input', () => {
-    if (nameInput.classList.contains('error')) validateName();
-});
-emailInput.addEventListener('blur', () => validateEmail());
-emailInput.addEventListener('input', () => {
-    if (emailInput.classList.contains('error')) validateEmail();
+requiredFields.forEach((field) => {
+    field.input.addEventListener('blur', () => validateField(field));
+    field.input.addEventListener('input', () => {
+        if (field.input.classList.contains('error')) validateField(field);
+    });
 });
 
 contactForm.addEventListener('submit', (e) => {
-    const nameOk = validateName(true);
-    const emailOk = validateEmail(true);
-    if (!nameOk || !emailOk) {
+    let firstInvalid = null;
+    requiredFields.forEach((field) => {
+        const ok = validateField(field, true);
+        if (!ok && !firstInvalid) firstInvalid = field.input;
+    });
+    if (firstInvalid) {
         e.preventDefault();
-        (!nameOk ? nameInput : emailInput).focus();
+        firstInvalid.focus();
     }
 });
 

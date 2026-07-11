@@ -4,5 +4,9 @@ eleventyExcludeFromCollections: true
 ---
 {
   "notifyEmail": {{ contact.notifyEmail | dump | safe }},
-  "formSubject": {{ contact.formSubject | dump | safe }}
+  "formSubject": {{ contact.formSubject | dump | safe }},
+  "fields": [
+    {% for field in contact.fields %}{ "id": {{ field.id | dump | safe }}, "label": {{ field.label | dump | safe }} }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
 }

@@ -219,33 +219,42 @@ function AboutSurface({ page, editable, updatePage }) {
 }
 
 // ---- Contact --------------------------------------------------------------
+const FIELD_TYPES = [
+  { type: "text", label: "Short text" },
+  { type: "email", label: "Email" },
+  { type: "textarea", label: "Long text" },
+  { type: "select", label: "Dropdown" },
+];
+
 function ContactSurface({ page, editable, updatePage }) {
   const d = page.data;
-  const setOpt = (key, i, val) => {
-    const arr = [...(d[key] || [])];
-    arr[i] = val;
-    updatePage({ [key]: arr });
+  const fields = d.fields || [];
+  const setFields = (next) => updatePage({ fields: next });
+  const setField = (i, patch) =>
+    setFields(fields.map((f, idx) => (idx === i ? { ...f, ...patch } : f)));
+  const moveField = (i, dir) => {
+    const j = i + dir;
+    if (j < 0 || j >= fields.length) return;
+    const next = [...fields];
+    const [item] = next.splice(i, 1);
+    next.splice(j, 0, item);
+    setFields(next);
   };
-  const addOpt = (key) => updatePage({ [key]: [...(d[key] || []), ""] });
-  const delOpt = (key, i) =>
-    updatePage({ [key]: (d[key] || []).filter((_, j) => j !== i) });
-  const OptionList = (key, label) =>
-    html`<div class="admin-listblock">
-      <p class="admin-listblock-label">${label}</p>
-      <ul>
-        ${(d[key] || []).map(
-          (opt, i) => html`<li key=${key + i} class="li-editable">
-            <${EditableText}
-              value=${opt}
-              editable=${editable}
-              onCommit=${(v) => setOpt(key, i, v)}
-            />
-            <${DelBtn} title="Delete option" onClick=${() => delOpt(key, i)} />
-          </li>`
-        )}
-      </ul>
-      <${AddBtn} label="+ Add option" onClick=${() => addOpt(key)} />
-    </div>`;
+  const delField = (i) => setFields(fields.filter((_, idx) => idx !== i));
+  const addField = () =>
+    setFields([
+      ...fields,
+      { id: "field_" + Date.now().toString(36), label: "New Field", type: "text", required: false },
+    ]);
+  const setOpt = (fi, oi, val) => {
+    const opts = [...(fields[fi].options || [])];
+    opts[oi] = val;
+    setField(fi, { options: opts });
+  };
+  const addOpt = (fi) => setField(fi, { options: [...(fields[fi].options || []), ""] });
+  const delOpt = (fi, oi) =>
+    setField(fi, { options: (fields[fi].options || []).filter((_, j) => j !== oi) });
+
   return html`<div>
     <${Hero} value=${d.hero} editable=${editable} onCommit=${(t) => updatePage({ hero: t })} />
     <section class="contact-section">
@@ -274,8 +283,63 @@ function ContactSurface({ page, editable, updatePage }) {
                 account's send credentials are set once on the server — see the guide.)
               </p>
             </div>
-            ${OptionList("organizations", "Organization dropdown options")}
-            ${OptionList("projects", "Project dropdown options")}
+            <div class="admin-listblock">
+              <p class="admin-listblock-label">Form fields</p>
+              ${fields.map((field, i) => {
+                const locked = !!field.locked;
+                return html`<div class="field-row" key=${field.id}>
+                  <div class="field-row-head">
+                    <input
+                      class="admin-field field-row-label"
+                      type="text"
+                      value=${field.label}
+                      onInput=${(e) => setField(i, { label: e.target.value })}
+                    />
+                    <select
+                      class="rt-select field-row-type"
+                      title="Field type"
+                      value=${field.type}
+                      disabled=${locked}
+                      onChange=${(e) => setField(i, { type: e.target.value })}
+                    >
+                      ${FIELD_TYPES.map((t) => html`<option value=${t.type}>${t.label}</option>`)}
+                    </select>
+                    <label class="field-row-required">
+                      <input
+                        type="checkbox"
+                        checked=${field.required}
+                        disabled=${locked}
+                        onChange=${(e) => setField(i, { required: e.target.checked })}
+                      />
+                      Required
+                    </label>
+                    <button class="rt-btn" title="Move up" disabled=${i === 0} onClick=${() => moveField(i, -1)}>↑</button>
+                    <button class="rt-btn" title="Move down" disabled=${i === fields.length - 1} onClick=${() => moveField(i, 1)}>↓</button>
+                    ${locked
+                      ? html`<span class="field-row-locked" title="An email field is required for the form to work">🔒 required</span>`
+                      : html`<button class="rt-btn rt-del" title="Delete field" onClick=${() => delField(i)}>✕</button>`}
+                  </div>
+                  ${field.type === "select"
+                    ? html`<div class="field-row-options">
+                        <ul>
+                          ${(field.options || []).map(
+                            (opt, oi) => html`<li key=${"opt" + oi} class="li-editable">
+                              <${EditableText}
+                                value=${opt}
+                                editable=${editable}
+                                onCommit=${(v) => setOpt(i, oi, v)}
+                              />
+                              <${DelBtn} title="Delete option" onClick=${() => delOpt(i, oi)} />
+                            </li>`
+                          )}
+                        </ul>
+                        <${AddBtn} label="+ Add option" onClick=${() => addOpt(i)} />
+                      </div>`
+                    : null}
+                </div>`;
+              })}
+              <${AddBtn} label="+ Add field" onClick=${addField} />
+            </div>
           </div>`
         : html`<p style="opacity:.6">
             (The contact form renders here on the live site.)

@@ -2,21 +2,32 @@
   "hero": "Let's talk about your next project.",
   "notifyEmail": "",
   "formSubject": "New message from your website",
-  "organizations": [
-    "Start-Up",
-    "Non-Profit",
-    "Government Agency",
-    "Corporation",
-    "Other"
-  ],
-  "projects": [
-    "Visual Identity",
-    "Design System",
-    "Website Design",
-    "Product Design",
-    "Landing Page",
-    "Concept Envisioning",
-    "Campaign Branding",
-    "Other"
+  "fields": [
+    { "id": "name", "label": "Your Name", "type": "text", "required": true },
+    { "id": "email", "label": "Your Email", "type": "email", "required": true, "locked": true },
+    {
+      "id": "organization",
+      "label": "Organization",
+      "type": "select",
+      "required": false,
+      "options": ["Start-Up", "Non-Profit", "Government Agency", "Corporation", "Other"]
+    },
+    {
+      "id": "project",
+      "label": "Project",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Visual Identity",
+        "Design System",
+        "Website Design",
+        "Product Design",
+        "Landing Page",
+        "Concept Envisioning",
+        "Campaign Branding",
+        "Other"
+      ]
+    },
+    { "id": "message", "label": "Other notes", "type": "textarea", "required": false }
   ]
 }
