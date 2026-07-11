@@ -4,6 +4,7 @@
 import { html } from "@/lib.js";
 import { FONTS, fontByName } from "@/design/fonts.js";
 import { DEFAULT_THEME } from "@/design/theme.js";
+import { assetUrl } from "@/surface/assets.js";
 
 const STYLES = [
   { key: "display", label: "Display / hero", min: 2, max: 7 },
@@ -74,7 +75,7 @@ function ColorRow({ label, value, onInput }) {
   </label>`;
 }
 
-export function DesignPanel({ theme, update, onUploadFont }) {
+export function DesignPanel({ theme, update, onUploadFont, site, onUpdateSite, onUploadLogo, onRemoveLogo }) {
   const customFonts = theme.customFonts || [];
   const setFont = (key) => (name) => {
     const curated = fontByName(name);
@@ -89,6 +90,26 @@ export function DesignPanel({ theme, update, onUploadFont }) {
     <div class="design-controls">
       <h2>Design</h2>
       <p class="design-intro">Set the font, size & letter-spacing for each text style. Changes preview live and apply site-wide when you Save. The tick on each slider marks the default.</p>
+
+      <h3>Site identity</h3>
+      <label class="design-row">
+        <span class="design-label">Name</span>
+        <input
+          class="design-select" type="text" value=${site.name}
+          onInput=${(e) => onUpdateSite({ name: e.target.value })}
+        />
+      </label>
+      <div class="design-row">
+        <span class="design-label">Logo</span>
+        <span class="design-logo">
+          ${site.logo ? html`<img class="design-logo-thumb" src=${assetUrl(site.logo)} alt="" />` : null}
+          <button class="design-upload" type="button" onClick=${onUploadLogo}>⬆ Upload a logo…</button>
+          ${site.logo
+            ? html`<button class="design-reset" type="button" onClick=${onRemoveLogo}>Remove logo</button>`
+            : null}
+        </span>
+      </div>
+      <p class="design-hint">Shown top-left on every page. Upload a logo image, or leave it blank to show your name instead.</p>
 
       <h3>Text styles</h3>
       ${STYLES.map(

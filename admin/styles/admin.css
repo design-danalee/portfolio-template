@@ -158,6 +158,22 @@
   font-size: 12px;
   color: #8a8a92;
 }
+.design-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.design-logo-thumb {
+  height: 32px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  border: 1px solid var(--admin-line);
+  border-radius: 8px;
+  padding: 4px;
+  background: #fff;
+}
 .design-preview-label {
   font-family: ui-sans-serif, system-ui, sans-serif;
   font-size: 12px;

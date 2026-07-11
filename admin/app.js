@@ -37,6 +37,13 @@ import {
 import { DesignPanel } from "@/design/DesignPanel.js";
 import { applyTheme, serializeTheme, THEME_FILE, DEFAULT_THEME } from "@/design/theme.js";
 
+// Header brand (name and/or logo), edited in the Design panel > Site identity.
+const SITE_FILE = "src/_data/site.json";
+const DEFAULT_SITE = { name: "Your Name", tagline: "", logo: "" };
+function serializeSite(data) {
+  return JSON.stringify(data, null, 2) + "\n";
+}
+
 const client = makeClient(getToken);
 const contents = makeContents(client);
 const gitdata = makeGitData(client);
@@ -76,7 +83,7 @@ function App() {
     (async () => {
       try {
         await loadRepoConfig(); // resolve owner/repo/branch before any API call
-        const [projects, home, about, contact, themeData] = await Promise.all([
+        const [projects, home, about, contact, themeData, siteData] = await Promise.all([
           projectsApi.list(),
           pagesApi.load("home"),
           pagesApi.load("about"),
@@ -85,10 +92,14 @@ function App() {
             .read(THEME_FILE)
             .then((r) => JSON.parse(r.text))
             .catch(() => DEFAULT_THEME), // theme.json missing → sensible defaults
+          contents
+            .read(SITE_FILE)
+            .then((r) => JSON.parse(r.text))
+            .catch(() => DEFAULT_SITE), // site.json missing → sensible defaults
         ]);
         const theme = { path: THEME_FILE, data: themeData };
         applyTheme(theme.data);
-        setStore({ projects, pages: { home, about, contact }, theme });
+        setStore({ projects, pages: { home, about, contact }, theme, site: siteData });
       } catch (e) {
         setLoadErr(e.message || String(e));
       }
@@ -181,6 +192,31 @@ function App() {
     setMsg({ kind: "info", text: `Added font "${name}" — pick it for any style above.` });
   }
 
+  // Header brand: name text and/or an uploaded logo image (src/_data/site.json).
+  const updateSite = useCallback((patch) => {
+    setStore((s) => ({ ...s, site: { ...s.site, ...patch } }));
+    markDirty(SITE_FILE);
+  }, []);
+
+  async function uploadLogo() {
+    const file = await openFilePicker("image/*");
+    if (!file) return;
+    if (!/^image\//.test(file.type)) {
+      setMsg({ kind: "error", text: "Choose an image file for the logo." });
+      return;
+    }
+    const { dataUrl, base64 } = await readFile(file);
+    const path = assetPathFor(file);
+    setAssetOverride(path, dataUrl); // instant thumbnail preview
+    setPendingMedia((m) => ({ ...m, [path]: { base64 } }));
+    updateSite({ logo: path });
+    setMsg({ kind: "info", text: "Logo staged — Save to publish it." });
+  }
+
+  function removeLogo() {
+    updateSite({ logo: "" });
+  }
+
   async function ensureAuth() {
     if (getToken()) {
       setAuthed(true);
@@ -232,6 +268,9 @@ function App() {
         } else if (path === THEME_FILE) {
           files.push({ path, content: serializeTheme(store.theme.data) });
           labels.push("design");
+        } else if (path === SITE_FILE) {
+          files.push({ path, content: serializeSite(store.site) });
+          labels.push("site");
         } else {
           const name = Object.keys(PAGE_FILES).find((n) => PAGE_FILES[n] === path);
           files.push({ path, content: serializePage(store.pages[name]) });
@@ -397,6 +436,10 @@ function App() {
       theme=${store.theme.data}
       update=${updateTheme}
       onUploadFont=${uploadFont}
+      site=${store.site}
+      onUpdateSite=${updateSite}
+      onUploadLogo=${uploadLogo}
+      onRemoveLogo=${removeLogo}
     />`;
   } else if (pm) {
     const slug = decodeURIComponent(pm[1]);

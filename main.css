@@ -38,6 +38,20 @@ a:hover{
     height: 40px;
 }
 
+/* Header brand: an uploaded logo image, or the site name styled like a nav item
+   (edited via the CMS Design panel > Site identity, src/_data/site.json). */
+.site-brand {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: none;
+}
+.site-logo {
+    height: 48px;
+    width: auto;
+    display: block;
+}
+
 /* Nav Item */
 .nav-item {
     display: inline-block;
