@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>">
-    <title>{{ title }}</title>
+    <title>{{ title }}{% if title %} — {% endif %}{{ site.name }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     {# ---- Theme: 4 text styles (Display/Heading/Body/Caption), driven by
            src/_data/theme.json, editable in the CMS Design panel ---- #}

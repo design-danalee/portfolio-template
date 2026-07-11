@@ -60,7 +60,7 @@ if (status === 'success') {
     el.style.color = 'white';
     el.classList.remove('hidden');
 } else if (status === 'error') {
-    el.textContent = "Something went wrong. Try emailing me directly at danalee.seattle@gmail.com.";
+    el.textContent = "Something went wrong. Please try again in a moment.";
     el.style.backgroundColor = '#fee2e2';
     el.style.color = '#991b1b';
     el.classList.remove('hidden');

@@ -1,7 +1,7 @@
 {
-  "name": "hellodanalee-website",
+  "name": "portfolio-template",
   "version": "1.0.0",
-  "description": "Portfolio site for Dana Lee, built with Eleventy + Decap CMS.",
+  "description": "A self-hostable portfolio site with an inline, no-code CMS, built with Eleventy.",
   "private": true,
   "scripts": {
     "start": "eleventy --serve",

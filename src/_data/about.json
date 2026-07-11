@@ -1,21 +1,17 @@
 {
-  "hero": "Making brands & products feel like they were always on the same team.",
+  "hero": "A short, punchy line about how you work goes here.",
   "sections": [
     {
-      "heading": "Clarity from Complexity",
-      "body": "Most of my career has been spent solving design problems that don't have a clean answer: complex products, multi-platform systems, identities that need to scale without losing what made them interesting in the first place. The messier the problem, the more there is to find."
+      "heading": "A Section Heading",
+      "body": "Use this space to talk about your background, your approach, or what makes your work distinct. Two to four short sections works well — replace this copy with your own."
     },
     {
-      "heading": "Consideration at Any Scale",
-      "body": "Brand and systems work is where I live. The design systems I've built for enterprise software are made for experts, people who need the interface to get out of their way and have strong opinions about it. I've also worked with founders at the very beginning, when the brand is still an unexpressed vibe and a default Squarespace template. Whatever the scale, the same level of consideration goes into the work. No client gets the lazy version."
+      "heading": "Another Section Heading",
+      "body": "Keep going here with a second theme: the kinds of problems you like to solve, the industries you've worked in, or how you like to collaborate with clients."
     },
     {
-      "heading": "Agency & In-House Experience",
-      "body": "Time in-house at large tech companies taught me how design decisions compound over time, how one bad choice in 2019 is still haunting someone's component library today. A consultancy background means fast, polished, and right the first time, because there is no second time. Between the two, you get someone who thinks in systems and ships on deadline."
-    },
-    {
-      "heading": "Partners, Not Vendors",
-      "body": "Design doesn't happen in isolation. The more context there is, about your business, your users, the thing nobody put in the brief but everyone already knows, the better the work gets. I'm at my best when I'm close to the problem and the people trying to solve it."
+      "heading": "A Third Section",
+      "body": "Add or remove sections freely from the CMS — this whole page, including these headings and paragraphs, is editable."
     }
   ],
   "partner": {
@@ -23,36 +19,29 @@
     "tiles": [
       {
         "title": "Start-Ups",
-        "body": "From first brand mark to full design system, I match your pace and build for where you're going, not just where you are. Early stage moves fast, and the work I deliver is made to keep up and scale when you do."
+        "body": "Describe how you work with early-stage teams."
       },
       {
         "title": "Non-Profits",
-        "body": "Your mission deserves design that takes it seriously. I build identities and tools that communicate the weight and purpose of the work, so the people you're trying to reach actually feel it."
+        "body": "Describe how you work with mission-driven organizations."
       },
       {
         "title": "Government Agencies",
-        "body": "Public-facing design that's clear, accessible, and built to serve the people using it. I understand the constraints of government work and design within them without losing quality."
+        "body": "Describe how you work with public-sector clients."
       },
       {
         "title": "Corporations",
-        "body": "Comfortable working embedded with your team or owning the work end to end, with deep experience building design systems and brand identities that hold together across teams, platforms, and complexity."
+        "body": "Describe how you work with larger organizations and teams."
       }
     ]
   },
   "dataPoints": {
     "heading": "Other Data Points",
     "facts": [
-      "I am right handed",
-      "I make a mean eggplant parmesan",
-      "I started making my own chili crisp during COVID",
-      "I have two daughters and thus, know the lyrics to Kpop Demon Hunters' Takedown by heart",
-      "I was the MVP of my high school bowling team",
-      "I'm from NY",
-      "I live in Seattle",
-      "My favorite pasta shape is bucatini",
-      "My favorite color is chartreuse",
-      "What's Up? by 4 Non Blondes is my karaoke song of choice",
-      "I prefer my eggs over-medium"
+      "Replace this with a fun fact about you",
+      "Add as many or as few facts as you'd like",
+      "These show up one at a time on the About page",
+      "Visitors can click to roll for another one"
     ]
   }
 }
