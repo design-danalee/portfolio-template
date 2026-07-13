@@ -15,16 +15,31 @@ independent site — but every step below tells you exactly what to click.
 
 ## What you'll need before you start
 
-- A **GitHub account** (free) — [github.com/join](https://github.com/join) if you
+Two of these are free and take a minute. Two of them cost a small amount of money
+and are usually bought together in one step — here's what to actually go do:
+
+- **A GitHub account** — free. [github.com/join](https://github.com/join) if you
   don't have one.
-- A **PHP web hosting account** with FTP access — e.g. Bluehost, HostGator,
-  SiteGround. Any host that lets you host "PHP" or "static" sites works. (This
-  guide assumes you already have one, or are about to sign up for one.)
-- A **domain name** — usually bought through your host, or elsewhere and pointed
-  at your host.
-- A **Gmail account** you're willing to send contact-form emails from (a regular
-  Gmail address works fine — you're not changing your password, just creating a
-  separate "app password" for this one purpose, explained below).
+- **A Gmail account** you're willing to send contact-form emails from — free, and
+  it can be one you already have. You're not changing its password, just creating
+  a separate "app password" for this one purpose (Step 5 explains that).
+- **A domain name + PHP web hosting — bought together, in one signup, usually
+  $3–10/month.** If you don't already have these, here's the easiest path:
+  1. Go to a beginner-friendly host — **Bluehost** ([bluehost.com](https://bluehost.com))
+     is a reasonable default if you're not sure where to start. (HostGator and
+     SiteGround work too, if you'd rather compare.)
+  2. Pick their cheapest "shared hosting" plan.
+  3. During signup, it'll ask you to either **register a new domain** or use one
+     you already own. Pick "register a new domain" and type in the name you
+     want (e.g. `yourname.com`) — most hosts include the domain free for the
+     first year when you buy hosting this way.
+  4. Finish checkout. You now have both a domain and the FTP hosting account
+     this whole guide runs on — no separate domain registrar needed.
+
+  Already have hosting and/or a domain from somewhere else (e.g. bought the
+  domain on Namecheap, hosting elsewhere)? That's fine too — you'll just point
+  one at the other via your registrar's DNS settings, which your host's support
+  docs will walk you through. It's an extra step but a common one.
 
 ---
 
