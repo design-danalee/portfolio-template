@@ -25,9 +25,15 @@ and are usually bought together in one step — here's what to actually go do:
   a separate "app password" for this one purpose (Step 5 explains that).
 - **A domain name + PHP web hosting — bought together, in one signup, usually
   $3–10/month.** If you don't already have these, here's the easiest path:
-  1. Go to a beginner-friendly host — **Bluehost** ([bluehost.com](https://bluehost.com))
-     is a reasonable default if you're not sure where to start. (HostGator and
-     SiteGround work too, if you'd rather compare.)
+  1. Go to a beginner-friendly host. Two reasonable options:
+     - **Bluehost** ([bluehost.com](https://bluehost.com)) — a solid, well-known
+       default if you're not sure where to start.
+     - **Hostinger** ([hostinger.com](https://hostinger.com)) — usually the
+       cheaper of the two, especially if you prepay a longer term (their
+       price-per-month drops the longer you commit upfront). Good pick if
+       cost is the deciding factor.
+
+     (HostGator and SiteGround work too, if you'd rather compare further.)
   2. Pick their cheapest "shared hosting" plan.
   3. During signup, it'll ask you to either **register a new domain** or use one
      you already own. Pick "register a new domain" and type in the name you
