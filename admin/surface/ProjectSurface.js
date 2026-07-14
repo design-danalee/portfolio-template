@@ -52,8 +52,18 @@ export function ProjectSurface({ project, editable, update, onImageClick }) {
   const deleteSection = (si) =>
     setData({ sections: (d.sections || []).filter((_, i) => i !== si) });
   const moveSection = (si, dir) => setData({ sections: move(d.sections || [], si, dir) });
-  const addRow = (si, type) =>
-    mutSection(si, (s) => ({ ...s, rows: [...(s.rows || []), blankRow(type)] }));
+  const addRow = (si, type) => {
+    const row = blankRow(type);
+    const ri = (d.sections?.[si]?.rows || []).length; // index the new row will land at
+    mutSection(si, (s) => ({ ...s, rows: [...(s.rows || []), row] }));
+    // Media blocks: open the file picker right away instead of leaving an
+    // empty placeholder to click a second time. Passing el=null makes
+    // onImageClick skip the crop tool (which needs a rendered element to
+    // measure) and go straight to upload — same fallback path video/natural
+    // rows already use. Crop can still be applied afterward by clicking the
+    // now-populated row.
+    if (type !== "text_half" && onImageClick) onImageClick(row, null, { si, ri });
+  };
   const deleteRow = (si, ri) =>
     mutSection(si, (s) => ({ ...s, rows: (s.rows || []).filter((_, j) => j !== ri) }));
   const moveRow = (si, ri, dir) =>
