@@ -86,6 +86,8 @@ function renderInner({ row, editable, onChange, onImageClick }) {
       return html`<div
         class=${"wide-project-image roundy col-span-6 md:col-span-6" +
         (row.natural_height ? " wide-project-image--natural" : "")}
+        data-editable-img=${imgAttr}
+        onClick=${imgClick}
       >
         <video autoplay loop muted playsinline>
           <source src=${assetUrl(row.src)} type="video/mp4" />
