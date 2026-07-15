@@ -192,7 +192,10 @@ and a **Case studies** section with two sample projects to start from.
   you're done — it deploys automatically in a couple of minutes.
 - **Case studies:** click into "Sample Case Study One/Two," turn on Edit, and
   replace the placeholder text and images with your own work. Use **+ New case
-  study** on the dashboard to add more, or delete a sample one entirely.
+  study** on the dashboard to add more, or delete one via the **✕** on its
+  Dashboard card or the **Delete** button on its own page. Hover the top banner
+  to find **"Use video instead"** if you'd rather have a looping video there
+  instead of a photo.
 - **Design panel:** click the **Design** card to set your **name or upload a
   logo** (shown top-left on every page), pick fonts, adjust text sizes and
   letter-spacing for each of the four text styles (Display, Heading, Body,

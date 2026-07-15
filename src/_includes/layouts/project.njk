@@ -27,8 +27,11 @@ footer:
   {% endif %}
 {% endmacro %}
 
-{# ---- Hero image ---- #}
+{# ---- Hero image (or looping video, if hero_video is set) ---- #}
 <div class="wide-project-image" style="background-image: url('{{ hero_image }}');">
+    {% if hero_video %}
+    <video src="{{ hero_video }}" autoplay loop muted playsinline></video>
+    {% endif %}
 </div>
 
 {# ---- Title, description, capabilities, meta ---- #}

@@ -75,18 +75,43 @@ export function ProjectSurface({ project, editable, update, onImageClick }) {
     setData({ [key]: (d[key] || []).filter((_, j) => j !== i) });
 
   return html`<article class="admin-surface-page">
-    <div
-      class="wide-project-image"
-      style=${`background-image: url('${assetUrl(d.hero_image)}');`}
-      data-editable-img=${editable && onImageClick ? "1" : undefined}
-      onClick=${editable && onImageClick
-        ? (e) =>
-            onImageClick(
-              { __hero: true, src: d.hero_image },
-              e.currentTarget || e.target
-            )
-        : undefined}
-    ></div>
+    <div class="surf-row">
+      <div
+        class="wide-project-image"
+        style=${`background-image: url('${assetUrl(d.hero_image)}');`}
+        data-editable-img=${editable && onImageClick ? "1" : undefined}
+        onClick=${editable && onImageClick
+          ? (e) =>
+              d.hero_video
+                ? onImageClick(
+                    { __heroVideo: true, src: d.hero_video },
+                    e.currentTarget || e.target
+                  )
+                : onImageClick(
+                    { __hero: true, src: d.hero_image },
+                    e.currentTarget || e.target
+                  )
+          : undefined}
+      >
+        ${d.hero_video
+          ? html`<video src=${assetUrl(d.hero_video)} autoplay loop muted playsinline />`
+          : null}
+      </div>
+      ${editable
+        ? html`<div class="row-tools" onClick=${(e) => e.stopPropagation()}>
+            ${d.hero_video
+              ? html`<button class="rt-btn" onClick=${() => setData({ hero_video: "" })}>
+                  Use photo instead
+                </button>`
+              : html`<button
+                  class="rt-btn"
+                  onClick=${() => onImageClick && onImageClick({ __heroVideo: true, src: "" }, null)}
+                >
+                  Use video instead
+                </button>`}
+          </div>`
+        : null}
+    </div>
 
     <section class="section-intro">
       <div class="col-title">

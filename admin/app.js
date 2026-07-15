@@ -388,6 +388,10 @@ function App() {
       doUpload("image/*", (p) => updateProjectData(slug, { hero_image: p }));
       return;
     }
+    if (row.__heroVideo) {
+      doUpload("video/*", (p) => updateProjectData(slug, { hero_video: p }));
+      return;
+    }
     // Card image, clicked from the Home work-grid — targets whichever
     // project's card was clicked, not necessarily "the current project"
     // (there is no single current project on the Home page).

@@ -83,6 +83,7 @@ export function blankProject(slug, title) {
       card_title: title || "Untitled",
       card_tagline: "",
       hero_image: "",
+      hero_video: "",
       description: "",
       capabilities: [],
       meta: [],
