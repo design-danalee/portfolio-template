@@ -51,6 +51,10 @@ const projectsApi = makeProjects(contents);
 const pagesApi = makePages(contents);
 
 const PAGE_NAMES = ["home", "about", "contact"];
+// "video/*" alone is unreliable in some browsers/file pickers — real video
+// files (esp. .mov from iPhone/QuickTime with certain codecs) can show up
+// greyed out. Listing extensions alongside the MIME wildcard fixes it.
+const VIDEO_ACCEPT = "video/*,.mp4,.mov,.webm,.m4v";
 
 function useHashRoute() {
   const [hash, setHash] = useState(location.hash || "#/");
@@ -389,7 +393,7 @@ function App() {
       return;
     }
     if (row.__heroVideo) {
-      doUpload("video/*", (p) => updateProjectData(slug, { hero_video: p }));
+      doUpload(VIDEO_ACCEPT, (p) => updateProjectData(slug, { hero_video: p }));
       return;
     }
     // Card image, clicked from the Home work-grid — targets whichever
@@ -406,7 +410,7 @@ function App() {
       setCropState({ slug, loc, row, aspect });
       return;
     }
-    const accept = String(row.type).startsWith("video") ? "video/*" : "image/*";
+    const accept = String(row.type).startsWith("video") ? VIDEO_ACCEPT : "image/*";
     doUpload(accept, (p) => updateRow(slug, loc, (r) => ({ ...r, src: p })));
   }
 
