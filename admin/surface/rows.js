@@ -89,9 +89,7 @@ function renderInner({ row, editable, onChange, onImageClick }) {
         data-editable-img=${imgAttr}
         onClick=${imgClick}
       >
-        <video autoplay loop muted playsinline>
-          <source src=${assetUrl(row.src)} type="video/mp4" />
-        </video>
+        <video src=${assetUrl(row.src)} autoplay loop muted playsinline></video>
       </div>`;
 
     case "image_full_natural":

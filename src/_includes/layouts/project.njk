@@ -16,9 +16,7 @@ footer:
     <div class="project-image roundy col-span-6 md:col-span-3{% if row.crop %} bg-cropped{% else %}{% if row.fit %} {{ row.fit }}{% endif %}{% if row.zoom %} {{ row.zoom }}{% endif %}{% endif %}" style="background-image: url('{{ row.src }}');{% if row.crop %} background-position: {{ row.crop.x }}% {{ row.crop.y }}%; background-size: {{ row.crop.size }}%;{% endif %}"></div>
   {% elif row.type == "video_full" %}
     <div class="wide-project-image roundy col-span-6 md:col-span-6{% if row.natural_height %} wide-project-image--natural{% endif %}">
-        <video autoplay loop muted playsinline>
-            <source src="{{ row.src }}" type="video/mp4">
-        </video>
+        <video src="{{ row.src }}" autoplay loop muted playsinline></video>
     </div>
   {% elif row.type == "image_full_natural" %}
     <div class="roundy col-span-6 md:col-span-6">
