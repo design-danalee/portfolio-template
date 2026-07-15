@@ -230,3 +230,14 @@ check the **Actions** tab if you want to watch it happen.
 - **You changed your mind about a Design setting:** every style, color, and the
   Site Identity name/logo can be reset independently — nothing is permanent
   until you click Save.
+- **A deploy succeeded, but `/admin/` still shows old behavior:** some hosts
+  (Bluehost included) run a CDN/cache layer in front of your site that can
+  keep serving an old cached copy of `/admin/` after you've deployed a fix.
+  First, try the full address with the filename —
+  `https://yourdomain.com/admin/index.html` instead of just `.../admin/` —
+  as a quick way to confirm this is what's happening (it's usually cached
+  separately and often shows the fresh version immediately). If that fixes
+  it, your host is caching that page; look for a "Performance," "Caching,"
+  or "Cloudflare" section in your hosting dashboard with a "Purge Cache"
+  button, or ask your host's support to purge the cache for your domain —
+  it's a quick, routine request for them.
