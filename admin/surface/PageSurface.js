@@ -20,7 +20,7 @@ function Hero({ value, editable, onCommit }) {
 }
 
 // ---- Home -----------------------------------------------------------------
-function HomeSurface({ page, editable, updatePage, projects, updateProject, navigate }) {
+function HomeSurface({ page, editable, updatePage, projects, updateProject, navigate, onImageClick }) {
   const setHero = (t) => updatePage({ hero: t });
   const sorted = [...(projects || [])].sort(
     (a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)
@@ -34,8 +34,12 @@ function HomeSurface({ page, editable, updatePage, projects, updateProject, navi
             <div
               class="case-study roundy flex"
               style=${`background-image: url('${assetUrl(p.data.card_image)}');`}
+              data-editable-img=${editable && onImageClick ? "1" : undefined}
+              onClick=${editable && onImageClick
+                ? (e) => onImageClick({ __card: true, slug: p.slug, src: p.data.card_image }, e.currentTarget)
+                : undefined}
             >
-              <div class="case-study-label roundy">
+              <div class="case-study-label roundy" onClick=${(e) => e.stopPropagation()}>
                 <${EditableText}
                   tag="h2"
                   class="hero-text pb-2"

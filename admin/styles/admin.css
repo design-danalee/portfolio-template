@@ -337,6 +337,14 @@ body {
   border-color: transparent;
   color: #6b6b72;
 }
+.admin-btn--danger {
+  color: #b42318;
+}
+.admin-btn--danger:hover {
+  background: #e5484d;
+  color: #fff;
+  border-color: #e5484d;
+}
 
 /* ---- Surface wrapper (pushes content below the fixed bar) ---- */
 .admin-surface {
@@ -516,6 +524,32 @@ body {
 .admin-card-sub {
   font-size: 13px;
   color: #6b6b72;
+}
+.admin-card--project {
+  position: relative;
+}
+.admin-card-del {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(20, 20, 24, 0.06);
+  color: #6b6b72;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+.admin-card--project:hover .admin-card-del {
+  opacity: 1;
+}
+.admin-card-del:hover {
+  background: #e5484d;
+  color: #fff;
 }
 
 /* ---- Structure editing controls (edit mode only) ---- */

@@ -309,6 +309,36 @@ function App() {
     navigate("#/project/" + slug);
   }
 
+  async function deleteProject(slug) {
+    const project = store.projects.find((p) => p.slug === slug);
+    if (!project) return;
+    const title = project.data.title || slug;
+    if (!confirm(`Delete "${title}"? This removes it from the live site. It stays recoverable in git history, but there's no undo here.`)) {
+      return;
+    }
+    if (!(await ensureAuth())) return;
+    setSaving(true);
+    setMsg(null);
+    try {
+      await gitdata.commit({
+        deletions: [project.path],
+        message: `admin: delete ${title}`.slice(0, 72),
+      });
+      setStore((s) => ({ ...s, projects: s.projects.filter((p) => p.slug !== slug) }));
+      setDirty((prev) => {
+        const next = new Set(prev);
+        next.delete(project.path);
+        return next;
+      });
+      setMsg({ kind: "success", text: `Deleted "${title}". Deploy runs automatically.` });
+      if (currentProjectSlug() === slug) navigate("#/");
+    } catch (e) {
+      setMsg({ kind: "error", text: "Delete failed: " + (e.message || e) });
+    } finally {
+      setSaving(false);
+    }
+  }
+
   function currentProjectSlug() {
     const m = /^#\/project\/(.+)$/.exec(hash);
     return m ? decodeURIComponent(m[1]) : null;
@@ -356,6 +386,13 @@ function App() {
     const slug = currentProjectSlug();
     if (row.__hero) {
       doUpload("image/*", (p) => updateProjectData(slug, { hero_image: p }));
+      return;
+    }
+    // Card image, clicked from the Home work-grid — targets whichever
+    // project's card was clicked, not necessarily "the current project"
+    // (there is no single current project on the Home page).
+    if (row.__card) {
+      doUpload("image/*", (p) => updateProjectData(row.slug, { card_image: p }));
       return;
     }
     const canCrop = row.type === "image_half" || row.type === "image_full";
@@ -461,9 +498,10 @@ function App() {
       projects=${store.projects}
       updateProject=${updateProjectData}
       navigate=${navigate}
+      onImageClick=${onImageClick}
     />`;
   } else {
-    view = html`<${Dashboard} store=${store} onNew=${createProject} />`;
+    view = html`<${Dashboard} store=${store} onNew=${createProject} onDelete=${deleteProject} />`;
   }
 
   const title = dm
@@ -479,6 +517,7 @@ function App() {
     <${Toolbar}
       title=${title}
       isDashboard=${!pm && !gm && !dm}
+      isProject=${!!pm}
       showToggle=${!!(pm || gm)}
       editable=${editable}
       setEditable=${setEditable}
@@ -486,6 +525,7 @@ function App() {
       saving=${saving}
       authed=${authed}
       onSave=${save}
+      onDelete=${pm ? () => deleteProject(decodeURIComponent(pm[1])) : undefined}
       onLogin=${() => setShowLogin(true)}
       onLogout=${() => {
         clearToken();
@@ -605,6 +645,11 @@ function Toolbar(props) {
         : null}
     </div>
     <div class="admin-bar-right">
+      ${props.isProject
+        ? html`<button class="admin-btn admin-btn--danger" onClick=${props.onDelete}>
+            Delete
+          </button>`
+        : null}
       ${props.showToggle
         ? html`<button
             class=${"admin-btn" + (props.editable ? "" : " is-on")}
@@ -631,7 +676,7 @@ function Toolbar(props) {
   </header>`;
 }
 
-function Dashboard({ store, onNew }) {
+function Dashboard({ store, onNew, onDelete }) {
   const projects = [...store.projects].sort(
     (a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)
   );
@@ -662,13 +707,24 @@ function Dashboard({ store, onNew }) {
       <div class="admin-cards">
         ${projects.map(
           (p) => html`<a
-            class="admin-card"
+            class="admin-card admin-card--project"
             href=${"#/project/" + p.slug}
             key=${p.slug}
           >
             <span class="admin-card-kicker">#${p.data.order} · ${p.slug}</span>
             <span class="admin-card-title">${p.data.title}</span>
             <span class="admin-card-sub">${p.data.card_tagline || ""}</span>
+            <button
+              class="admin-card-del"
+              title="Delete case study"
+              onClick=${(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onDelete(p.slug);
+              }}
+            >
+              ✕
+            </button>
           </a>`
         )}
       </div>
